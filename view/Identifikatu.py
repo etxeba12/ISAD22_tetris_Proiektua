@@ -4,10 +4,11 @@ import view.aukerenPantaila as ap
 import view.ErregistroPantaila as ep
 import model.datuBase as db
 
-Izena = ""
-Pasahitza = ""
 
 class Identifikatu():
+
+    Izena = ""
+    Pasahitza = ""
 
     def __init__(self):
         super(Identifikatu, self).__init__()
@@ -16,6 +17,11 @@ class Identifikatu():
         self.window.geometry('220x250')
         self.window.configure(bg='white')
         self.window.title("Erabiltzailearen identifikazioa")
+
+        def datuakJaso():
+            Izena = izenaErabiltzaile.get()
+            Pasahitza = ErabiltzailePasahitza.get()
+            self.aukerenPantaila(Izena,Pasahitza)
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img)
@@ -27,7 +33,7 @@ class Identifikatu():
         izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken",)
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3,relief="sunken",)
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",)
         izenaErabiltzaile.pack()
 
 
@@ -39,10 +45,9 @@ class Identifikatu():
 
         ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken",)
         ErabiltzailePasahitza.pack()
-        Pasahitza = ErabiltzailePasahitza
 
         #botoia onartu
-        button = tk.Button(self.window, text="ONARTU",command=(self.aukerenPantaila))
+        button = tk.Button(self.window, text="ONARTU",command=(datuakJaso))
         button.pack()
         #botoia onartu
 
@@ -55,14 +60,14 @@ class Identifikatu():
         self.window.mainloop()
 
 
-    def aukerenPantaila(self):
+    def aukerenPantaila(self,Izena,Pasahitza):
         self.window.destroy()
         ondo = db.identifikatu(Izena,Pasahitza)
         if(ondo):
-            ap.aukerenPantaila
+            ap.aukerenPantaila()
             print("aukeren pantaila")
         else:
-            Identifikatu
+            Identifikatu()
             print("identifikatu")
 
     def erregistroPantaila(self,arg):

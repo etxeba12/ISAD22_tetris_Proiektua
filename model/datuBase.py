@@ -1,5 +1,4 @@
 import sqlite3
-import view.Identifikatu as id
 
 con = sqlite3.connect("datuBase.db")
 cur = con.cursor()
@@ -10,8 +9,7 @@ def taulaSortu():
         cur.execute("CREATE TABLE erabiltzaileak(izena VARCHAR(50), pasahitza VARCHAR(50), puntuazioa INT(10),galdera1 VARCHAR(50),galdera2 VARCHAR(50))")
 
 def identifikatu(Izena,Pasahitza):
-    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena = Izena AND pasahitza=Pasahitza")
-    print(res.fetchone())
+    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=? AND pasahitza=?",(Izena,Pasahitza))
     if(res.fetchone() is None):
         return False
     else:
