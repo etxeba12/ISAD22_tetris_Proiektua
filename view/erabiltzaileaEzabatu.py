@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 import model.datuBase as db
+import view.aukerenPantaila as ap
 
 Izena = ""
 
@@ -18,8 +19,17 @@ class erabiltzaileaEzabatu():
         panel = tk.Label(self.window, image=img)
         panel.pack(side="top", fill="both", expand="no")
 
+        def datuakJaso():
+            Izena = izenaErabiltzaile.get()
+            self.ezabatuErabil(Izena)
+
         zer = db.erabiltzaileGuztiakLortu()
-        print(zer)
+        for i in zer:
+            bat = tk.StringVar()
+            bat.set("  ERABILTZAILE IZENA  ")
+
+            Infolabel = tk.Label(self.window, textvariable=tk.StringVar(value=str(i[0]) + " → Puntuazioa: " + str(i[1])), borderwidth=3, relief="sunken", )
+            Infolabel.pack()
 
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  ")
@@ -31,6 +41,11 @@ class erabiltzaileaEzabatu():
         izenaErabiltzaile.pack()
 
         # botoia ezabatu
-        button = tk.Button(self.window, text="EZABATU", command=())
+        button = tk.Button(self.window, text="EZABATU", command=(datuakJaso))
         button.pack()
         # botoia ezabatu
+
+    def ezabatuErabil(self,Izena):
+        db.erabiltzaileEzabatu(Izena)
+        self.window.destroy()
+        ap.aukerenPantaila()

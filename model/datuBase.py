@@ -35,3 +35,7 @@ def pasahitzaAldatu(izena,P1):
 def erabiltzaileGuztiakLortu():
     res = cur.execute("SELECT izena,puntuazioa FROM erabiltzaileak")
     return res.fetchall()
+
+def erabiltzaileEzabatu(Izena):
+    res = cur.execute("DELETE FROM erabiltzaileak WHERE izena=?",[Izena])
+    con.commit()
