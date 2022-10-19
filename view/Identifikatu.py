@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import view.aukerenPantaila as ap
 import view.ErregistroPantaila as ep
+import model.datuBase as db
 
 class Identifikatu():
 
@@ -50,7 +51,7 @@ class Identifikatu():
 
     def aukerenPantaila(self):
         self.window.destroy()
-        ap.aukerenPantaila()
+        db.datuBase()
 
     def erregistroPantaila(self,arg):
         self.window.destroy()
