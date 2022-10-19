@@ -1,8 +1,14 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+import model.datuBase as db
 import view.Identifikatu as Id
 
 class ErregistroPantaila():
+
+    Izena = ""
+    Pasahitza = ""
+    Galdera1 = ""
+    Galdera2 = ""
 
     def __init__(self):
         super(ErregistroPantaila, self).__init__()
@@ -14,6 +20,13 @@ class ErregistroPantaila():
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img)
         panel.pack(side="top", fill="both", expand="no")
+
+        def datuakJaso():
+            Izena = izenaErabiltzaile.get()
+            Pasahitza = ErabiltzailePasahitza.get()
+            Galdera1 = galdera1erantzun.get()
+            Galdera2 = galdera2erantzun.get()
+            self.erregistratu(Izena,Pasahitza,Galdera1,Galdera2)
 
         #izena
         izena = tk.StringVar()
@@ -64,12 +77,17 @@ class ErregistroPantaila():
         #galdera 2 testua
 
         # botoia erregistratu
-        button = tk.Button(self.window, text="ERREGISTRATU", command=(self.identifikaturaBueltatu))
+        button = tk.Button(self.window, text="ERREGISTRATU", command=(datuakJaso))
         button.pack()
         # botoia erregistratu
 
         self.window.mainloop()
 
-    def identifikaturaBueltatu(self):
+    def erregistratu(self,Izena,Pasahitza,Galdera1,Galdera2):
         self.window.destroy()
-        Id.Identifikatu()
+        print(Izena,Pasahitza,Galdera1,Galdera2)
+        sartuta = db.erregistratu(Izena,Pasahitza,Galdera1,Galdera2)
+        if(sartuta):
+            ErregistroPantaila()
+        else:
+            Id.Identifikatu()
