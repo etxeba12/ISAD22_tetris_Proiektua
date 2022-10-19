@@ -2,11 +2,16 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import view.aukerenPantaila as ap
 import view.ErregistroPantaila as ep
+import model.datuBase as db
+
+Izena = ""
+Pasahitza = ""
 
 class Identifikatu():
 
     def __init__(self):
         super(Identifikatu, self).__init__()
+        db.taulaSortu()
         self.window = tk.Tk()
         self.window.geometry('220x250')
         self.window.configure(bg='white')
@@ -25,15 +30,16 @@ class Identifikatu():
         izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3,relief="sunken",)
         izenaErabiltzaile.pack()
 
+
         pasahitza = tk.StringVar()
         pasahitza.set("          PASAHITZA          ")
 
         pasahitzalabel = tk.Label(self.window, textvariable=pasahitza, borderwidth=3,relief="sunken",)
         pasahitzalabel.pack()
 
-        ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,
-                                         show='*', borderwidth=3,relief="sunken",)
+        ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken",)
         ErabiltzailePasahitza.pack()
+        Pasahitza = ErabiltzailePasahitza
 
         #botoia onartu
         button = tk.Button(self.window, text="ONARTU",command=(self.aukerenPantaila))
@@ -48,9 +54,16 @@ class Identifikatu():
 
         self.window.mainloop()
 
+
     def aukerenPantaila(self):
         self.window.destroy()
-        ap.aukerenPantaila()
+        ondo = db.identifikatu(Izena,Pasahitza)
+        if(ondo):
+            ap.aukerenPantaila
+            print("aukeren pantaila")
+        else:
+            Identifikatu
+            print("identifikatu")
 
     def erregistroPantaila(self,arg):
         self.window.destroy()
