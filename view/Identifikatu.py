@@ -3,12 +3,12 @@ from PIL import ImageTk, Image
 import view.aukerenPantaila as ap
 import view.ErregistroPantaila as ep
 import model.datuBase as db
+import view.PasahitzaAldatu as pa
 
+Izena = ""
+Pasahitza = ""
 
 class Identifikatu():
-
-    Izena = ""
-    Pasahitza = ""
 
     def __init__(self):
         super(Identifikatu, self).__init__()
@@ -63,6 +63,8 @@ class Identifikatu():
     def aukerenPantaila(self,Izena,Pasahitza):
         self.window.destroy()
         ondo = db.identifikatu(Izena,Pasahitza)
+        ap.Izena = Izena
+        pa.Izena = Izena
         if(ondo):
             ap.aukerenPantaila()
             print("aukeren pantaila")

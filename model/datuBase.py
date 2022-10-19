@@ -24,5 +24,14 @@ def erregistratu(Izena,Pasahitza,Galdera1,Galdera2):
     else:
         return True
 
+def datuakLortu(Izena):
+    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?", [Izena])
+    return res.fetchone()
 
+def pasahitzaAldatu(izena,P1):
+    res = cur.execute("UPDATE erabiltzaileak SET pasahitza=? WHERE izena=?",(P1,izena))
+    con.commit()
 
+def erabiltzaileGuztiakLortu():
+    res = cur.execute("SELECT izena,puntuazioa FROM erabiltzaileak")
+    return res.fetchall()
