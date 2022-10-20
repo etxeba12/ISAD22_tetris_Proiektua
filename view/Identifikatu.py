@@ -53,7 +53,7 @@ class Identifikatu():
         #botoia onartu
 
         #etiketa erregistroa
-        erregistroEtiqueta = tk.Label(self.window, text='Ez zaude erregistratua?')
+        erregistroEtiqueta = tk.Label(self.window, text='ez zaude erregistratua?')
         erregistroEtiqueta.pack()
         erregistroEtiqueta.bind('<Button-1>', self.erregistroPantaila)
         #etiketa erregistroa
