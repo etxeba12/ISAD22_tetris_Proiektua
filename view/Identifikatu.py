@@ -4,6 +4,7 @@ import view.aukerenPantaila as ap
 import view.ErregistroPantaila as ep
 import model.datuBase as db
 import view.PasahitzaAldatu as pa
+import view.pasahitzaBerreskuratu as pb
 
 Izena = ""
 Pasahitza = ""
@@ -14,7 +15,7 @@ class Identifikatu():
         super(Identifikatu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
-        self.window.geometry('220x250')
+        self.window.geometry('300x300')
         self.window.configure(bg='white')
         self.window.title("Erabiltzailearen identifikazioa")
 
@@ -58,9 +59,9 @@ class Identifikatu():
         #etiketa erregistroa
 
         # etiketa pasahitza berreskuratu
-        pasahitzaEtiqueta = tk.Label(self.window, text='Ez zaude erregistratua?')
+        pasahitzaEtiqueta = tk.Label(self.window, text='pasahitza ahaztu duzu?')
         pasahitzaEtiqueta.pack()
-        pasahitzaEtiqueta.bind('<Button-1>', self.erregistroPantaila)
+        pasahitzaEtiqueta.bind('<Button-1>', self.berreskuratu)
         # etiketa pasahitza berreskuratu
 
         self.window.mainloop()
@@ -82,4 +83,7 @@ class Identifikatu():
         self.window.destroy()
         ep.ErregistroPantaila()
 
+    def berreskuratu(self,arg):
+        self.window.destroy()
+        pb.pasahitzaBerreskuratu()
 

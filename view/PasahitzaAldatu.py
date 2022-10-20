@@ -54,6 +54,7 @@ class PasahitzaAldatu():
     def PasahitzaSartu(self,P1,P2):
         if(P1 == P2):
             db.pasahitzaAldatu(Izena,P1)
+            ap.Izena = Izena
             self.window.destroy()
             ap.aukerenPantaila()
         else:

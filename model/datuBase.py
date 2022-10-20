@@ -39,3 +39,7 @@ def erabiltzaileGuztiakLortu():
 def erabiltzaileEzabatu(Izena):
     res = cur.execute("DELETE FROM erabiltzaileak WHERE izena=?",[Izena])
     con.commit()
+
+def pasahitzaBerreskuratu(izena):
+    res = cur.execute("SELECT izena,galdera1,galdera2 FROM erabiltzaileak WHERE izena=?", [izena])
+    return res.fetchone()
