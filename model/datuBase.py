@@ -19,7 +19,7 @@ def erregistratu(Izena,Pasahitza,Galdera1,Galdera2):
     #erabiltzaile izena badago komprobatzen dugu
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?",[Izena])
     if(res.fetchone() is None):
-        #erabiltzaile izena sartuta ez badago, sartzen dugu
+        #Erabiltzaile izena sartuta ez badago, sartzen dugu
         cur.execute("INSERT INTO erabiltzaileak VALUES(?,?,0,?,?)",(Izena,Pasahitza,Galdera1,Galdera2))
         con.commit()
         return False
