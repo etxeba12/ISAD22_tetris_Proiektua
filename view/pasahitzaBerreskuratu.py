@@ -8,15 +8,15 @@ import view.PasahitzaAldatu as pa
 Izena = ""
 Pasahitza = ""
 
-class Identifikatu():
+class pasahitzaBerreskuratu():
 
     def __init__(self):
-        super(Identifikatu, self).__init__()
+        super(pasahitzaBerreskuratu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
         self.window.geometry('220x250')
         self.window.configure(bg='white')
-        self.window.title("Erabiltzailearen identifikazioa")
+        self.window.title("Pasahitza Berreskuratu")
 
         def datuakJaso():
             Izena = izenaErabiltzaile.get()
@@ -27,6 +27,7 @@ class Identifikatu():
         panel = tk.Label(self.window, image=img)
         panel.pack(side="top", fill="both", expand="no")
 
+        # erabiltzaile izena
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  ")
 
@@ -35,8 +36,9 @@ class Identifikatu():
 
         izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",)
         izenaErabiltzaile.pack()
+        # erabiltzaile izena
 
-
+        # 1.galdera
         pasahitza = tk.StringVar()
         pasahitza.set("          PASAHITZA          ")
 
@@ -45,41 +47,11 @@ class Identifikatu():
 
         ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken",)
         ErabiltzailePasahitza.pack()
-
+        # 1.galdera
         #botoia onartu
-        button = tk.Button(self.window, text="ONARTU",command=(datuakJaso))
+        button = tk.Button(self.window, text="BERRESKURATU",command=(datuakJaso))
         button.pack()
         #botoia onartu
 
-        #etiketa erregistroa
-        erregistroEtiqueta = tk.Label(self.window, text='Ez zaude erregistratua?')
-        erregistroEtiqueta.pack()
-        erregistroEtiqueta.bind('<Button-1>', self.erregistroPantaila)
-        #etiketa erregistroa
-
-        # etiketa pasahitza berreskuratu
-        pasahitzaEtiqueta = tk.Label(self.window, text='Ez zaude erregistratua?')
-        pasahitzaEtiqueta.pack()
-        pasahitzaEtiqueta.bind('<Button-1>', self.erregistroPantaila)
-        # etiketa pasahitza berreskuratu
 
         self.window.mainloop()
-
-
-    def aukerenPantaila(self,Izena,Pasahitza):
-        self.window.destroy()
-        ondo = db.identifikatu(Izena,Pasahitza)
-        ap.Izena = Izena
-        pa.Izena = Izena
-        if(ondo):
-            ap.aukerenPantaila()
-            print("aukeren pantaila")
-        else:
-            Identifikatu()
-            print("identifikatu")
-
-    def erregistroPantaila(self,arg):
-        self.window.destroy()
-        ep.ErregistroPantaila()
-
-
