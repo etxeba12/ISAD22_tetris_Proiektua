@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+from tkinter import messagebox
 import model.datuBase as db
 import view.PasahitzaAldatu as pa
 import view.erabiltzaileaEzabatu as ez
@@ -66,5 +67,11 @@ class aukerenPantaila():
         pa.PasahitzaAldatu()
 
     def ErabiltzaileEzabatu(self):
-        self.window.destroy()
-        ez.erabiltzaileaEzabatu()
+        if Izena == "iker" or Izena == "imanol":
+            self.window.destroy()
+            ez.erabiltzaileaEzabatu()
+        else:
+            messagebox.showinfo(message="Ez duzu hau egiteko baimena", title="BaimenikEz")
+            self.window.destroy()
+            aukerenPantaila()
+

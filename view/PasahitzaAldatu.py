@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+from tkinter import messagebox
 import model.datuBase as db
 import view.aukerenPantaila as ap
 
@@ -17,7 +18,12 @@ class PasahitzaAldatu():
         def datuakJaso():
             Pasahitza1 = pasahitzaErabiltzaile.get()
             Pasahitza2 = ErabiltzailePasahitza2.get()
-            self.PasahitzaSartu(Pasahitza1,Pasahitza2)
+            if len(Pasahitza2)==0 or len(Pasahitza1)==0 :
+                messagebox.showinfo(message="Pasahitza hau ez du balio", title="PasahitzaError")
+                self.window.destroy()
+                PasahitzaAldatu()
+            else:
+                self.PasahitzaSartu(Pasahitza1, Pasahitza2)
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img)
@@ -58,4 +64,6 @@ class PasahitzaAldatu():
             self.window.destroy()
             ap.aukerenPantaila()
         else:
+            messagebox.showinfo(message="Pasahitzak ez dira berdinak", title="PasahitzaError")
+            self.window.destroy()
             PasahitzaAldatu()
