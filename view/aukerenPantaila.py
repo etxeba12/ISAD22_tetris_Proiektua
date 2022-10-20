@@ -13,7 +13,7 @@ class aukerenPantaila():
     def __init__(self):
         super(aukerenPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('220x280')
+        self.window.geometry('300x300')
         self.window.title("Aukeren pantaila")
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))

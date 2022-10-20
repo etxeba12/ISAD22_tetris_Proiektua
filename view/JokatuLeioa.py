@@ -9,7 +9,7 @@ class JokatuLeioa(object):
 	def __init__(self):
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
-		self.window.geometry('220x460')
+		self.window.geometry('300x300')
 		self.window.title("Tetris jokoa")
 
 		

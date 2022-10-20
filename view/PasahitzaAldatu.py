@@ -11,7 +11,7 @@ class PasahitzaAldatu():
     def __init__(self):
         super(PasahitzaAldatu, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('220x250')
+        self.window.geometry('300x300')
         self.window.configure(bg='white')
         self.window.title("Pasahitza Aldatu")
 

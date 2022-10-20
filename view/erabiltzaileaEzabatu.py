@@ -11,7 +11,7 @@ class erabiltzaileaEzabatu():
         super(erabiltzaileaEzabatu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
-        self.window.geometry('220x250')
+        self.window.geometry('300x300')
         self.window.configure(bg='white')
         self.window.title("Erabiltzailearen identifikazioa")
 

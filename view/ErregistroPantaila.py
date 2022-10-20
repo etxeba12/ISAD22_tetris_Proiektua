@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import model.datuBase as db
 import view.Identifikatu as Id
+from tkinter import messagebox
 
 class ErregistroPantaila():
 
@@ -84,10 +85,25 @@ class ErregistroPantaila():
         self.window.mainloop()
 
     def erregistratu(self,Izena,Pasahitza,Galdera1,Galdera2):
-        self.window.destroy()
-        print(Izena,Pasahitza,Galdera1,Galdera2)
-        sartuta = db.erregistratu(Izena,Pasahitza,Galdera1,Galdera2)
-        if(sartuta):
-            ErregistroPantaila()
+
+        datuOnak= self.datuakKomprobatu(Izena,Pasahitza,Galdera1,Galdera2)
+
+        if(datuOnak):
+            erabilsartutadago = db.erregistratu(Izena, Pasahitza, Galdera1, Galdera2)
+            if(erabilsartutadago):
+                messagebox.showinfo(message="Izena hau hartuta dago", title="ErregistroError")
+                self.window.destroy()
+                ErregistroPantaila()
+            else:
+                self.window.destroy()
+                Id.Identifikatu()
         else:
-            Id.Identifikatu()
+            messagebox.showinfo(message="Datu guztiak bete behar dira", title="ErregistroError")
+            self.window.destroy()
+            ErregistroPantaila()
+
+    def datuakKomprobatu(self, Izena,Pasahitza,Galdera1,Galdera2):
+        if len(Izena)==0 or len(Pasahitza)==0 or len(Galdera1)==0 or len(Galdera1)==0:
+            return False
+        else:
+            return True
