@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import model.datuBase as db
 import view.PasahitzaAldatu as pa
+import view.Identifikatu as Id
 
 Izena = ""
 
@@ -63,6 +64,11 @@ class pasahitzaBerreskuratu():
         button.pack()
         #botoia onartu
 
+        # botoia atzera bueltatu
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button.pack()
+        # botoia atzera bueltatu
+
 
         self.window.mainloop()
 
@@ -80,3 +86,7 @@ class pasahitzaBerreskuratu():
                     pasahitzaBerreskuratu()
             else:
                 pasahitzaBerreskuratu()
+
+    def atzerabueltatu(self):
+        self.window.destroy()
+        Id.Identifikatu()

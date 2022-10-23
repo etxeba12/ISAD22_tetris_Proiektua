@@ -45,7 +45,16 @@ class erabiltzaileaEzabatu():
         button.pack()
         # botoia ezabatu
 
+        # botoia atzera bueltatu
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button.pack()
+        # botoia atzera bueltatu
+
     def ezabatuErabil(self,Izena):
         db.erabiltzaileEzabatu(Izena)
+        self.window.destroy()
+        ap.aukerenPantaila()
+
+    def atzerabueltatu(self):
         self.window.destroy()
         ap.aukerenPantaila()

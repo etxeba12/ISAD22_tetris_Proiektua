@@ -55,6 +55,11 @@ class PasahitzaAldatu():
         button.pack()
         #botoia ALDATU
 
+        # botoia atzera bueltatu
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button.pack()
+        # botoia atzera bueltatu
+
         self.window.mainloop()
 
     def PasahitzaSartu(self,P1,P2):
@@ -67,3 +72,7 @@ class PasahitzaAldatu():
             messagebox.showinfo(message="Pasahitzak ez dira berdinak", title="PasahitzaError")
             self.window.destroy()
             PasahitzaAldatu()
+
+    def atzerabueltatu(self):
+        self.window.destroy()
+        ap.aukerenPantaila()

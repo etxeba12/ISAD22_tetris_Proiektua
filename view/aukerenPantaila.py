@@ -5,6 +5,7 @@ import model.datuBase as db
 import view.PasahitzaAldatu as pa
 import view.erabiltzaileaEzabatu as ez
 import view.JokatuLeioa as jl
+import view.Identifikatu as Id
 
 Izena = " "
 listaDatuak = ""
@@ -15,7 +16,7 @@ class aukerenPantaila():
     def __init__(self):
         super(aukerenPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('300x310')
+        self.window.geometry('300x340')
         self.window.title("Aukeren pantaila")
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
@@ -74,6 +75,11 @@ class aukerenPantaila():
         buttonAdmin.pack()
         # botoia admin
 
+        # botoia atzera bueltatu
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button.pack()
+        # botoia atzera bueltatu
+
 
         self.window.mainloop()
 
@@ -91,16 +97,24 @@ class aukerenPantaila():
             aukerenPantaila()
 
     def jokatuleioa(self,Maila):
-        print(Maila)
         tamaina = []
-        if(Maila == "1"):
-            tamaina = [20,40]
-            abiadura = int(400)
-        elif(Maila == "2"):
-            tamaina = [15, 30]
-            abiadura = int(300)
-        elif(Maila == "3"):
-            tamaina = [10, 20]
-            abiadura = int(200)
+        if(Maila == "1" or Maila == "2" or Maila == "3"):
+            if(Maila == "1"):
+                tamaina = [20,40]
+                abiadura = int(400)
+            elif(Maila == "2"):
+                tamaina = [15, 30]
+                abiadura = int(300)
+            elif(Maila == "3"):
+                tamaina = [10, 20]
+                abiadura = int(200)
+            self.window.destroy()
+            jl.JokatuLeioa(tamaina,abiadura)
+        else:
+            messagebox.showinfo(message="Maila 1, 2 edo 3 izan behar da", title="Mailaerror")
+            self.window.destroy()
+            aukerenPantaila()
+
+    def atzerabueltatu(self):
         self.window.destroy()
-        jl.JokatuLeioa(tamaina,abiadura)
+        Id.Identifikatu()

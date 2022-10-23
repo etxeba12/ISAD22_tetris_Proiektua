@@ -14,7 +14,7 @@ class ErregistroPantaila():
     def __init__(self):
         super(ErregistroPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('220x350')
+        self.window.geometry('220x330')
         self.window.configure(bg='white')
         self.window.title("Erregistro pantaila")
 
@@ -82,6 +82,11 @@ class ErregistroPantaila():
         button.pack()
         # botoia erregistratu
 
+        # botoia atrera bueltatu
+        button = tk.Button(self.window, text="ATZERA BUELATU", command=(self.atzerabueltatu))
+        button.pack()
+        # botoia atzera bueltatu
+
         self.window.mainloop()
 
     def erregistratu(self,Izena,Pasahitza,Galdera1,Galdera2):
@@ -101,6 +106,10 @@ class ErregistroPantaila():
             messagebox.showinfo(message="Datu guztiak bete behar dira", title="ErregistroError")
             self.window.destroy()
             ErregistroPantaila()
+
+    def atzerabueltatu(self):
+        self.window.destroy()
+        Id.Identifikatu()
 
     def datuakKomprobatu(self, Izena,Pasahitza,Galdera1,Galdera2):
         if len(Izena)==0 or len(Pasahitza)==0 or len(Galdera1)==0 or len(Galdera1)==0:
