@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+
 from PIL import ImageTk, Image
 import model.datuBase as db
 import view.PasahitzaAldatu as pa
@@ -73,18 +75,24 @@ class pasahitzaBerreskuratu():
         self.window.mainloop()
 
     def datuakKonprobatu(self,izenaErabil,g1,g2):
-        self.window.destroy()
+
         erantzun = db.pasahitzaBerreskuratu(izenaErabil)
         if erantzun is None:
+            self.window.destroy()
             pasahitzaBerreskuratu()
         else:
             if erantzun[1] == g1:
                 if erantzun[2] == g2:
                     pa.Izena = izenaErabil
+                    self.window.destroy()
                     pa.PasahitzaAldatu()
                 else:
+                    messagebox.showinfo(message="Galderak txarto erantzun dituzu", title="BerreskuratuError")
+                    self.window.destroy()
                     pasahitzaBerreskuratu()
             else:
+                messagebox.showinfo(message="Galderak txarto erantzun dituzu", title="BerreskuratuError")
+                self.window.destroy()
                 pasahitzaBerreskuratu()
 
     def atzerabueltatu(self):
