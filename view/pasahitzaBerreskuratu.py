@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-
 from PIL import ImageTk, Image
 import model.datuBase as db
 import view.PasahitzaAldatu as pa
@@ -85,7 +84,7 @@ class pasahitzaBerreskuratu():
                 if erantzun[2] == g2:
                     pa.Izena = izenaErabil
                     self.window.destroy()
-                    pa.PasahitzaAldatu()
+                    pa.PasahitzaAldatu(True)
                 else:
                     messagebox.showinfo(message="Galderak txarto erantzun dituzu", title="BerreskuratuError")
                     self.window.destroy()

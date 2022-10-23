@@ -3,12 +3,13 @@ from PIL import ImageTk, Image
 from tkinter import messagebox
 import model.datuBase as db
 import view.aukerenPantaila as ap
+import view.pasahitzaBerreskuratu as pb
 
 Izena = ""
 
 class PasahitzaAldatu():
 
-    def __init__(self):
+    def __init__(self,BerreskuratutikEtorri):
         super(PasahitzaAldatu, self).__init__()
         self.window = tk.Tk()
         self.window.geometry('300x300')
@@ -56,7 +57,7 @@ class PasahitzaAldatu():
         #botoia ALDATU
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(lambda: self.atzerabueltatu(BerreskuratutikEtorri)))
         button.pack()
         # botoia atzera bueltatu
 
@@ -73,6 +74,9 @@ class PasahitzaAldatu():
             self.window.destroy()
             PasahitzaAldatu()
 
-    def atzerabueltatu(self):
+    def atzerabueltatu(self,BerreskuratutikEtorri):
         self.window.destroy()
-        ap.aukerenPantaila()
+        if(BerreskuratutikEtorri):
+            pb.pasahitzaBerreskuratu()
+        else:
+            ap.aukerenPantaila()
