@@ -5,6 +5,7 @@ import view.ErregistroPantaila as ep
 import model.datuBase as db
 import view.PasahitzaAldatu as pa
 import view.pasahitzaBerreskuratu as pb
+from tkinter import messagebox
 
 Izena = ""
 Pasahitza = ""
@@ -68,16 +69,16 @@ class Identifikatu():
 
 
     def aukerenPantaila(self,Izena,Pasahitza):
-        self.window.destroy()
         ondo = db.identifikatu(Izena,Pasahitza)
         ap.Izena = Izena
         pa.Izena = Izena
         if(ondo):
+            self.window.destroy()
             ap.aukerenPantaila()
-            print("aukeren pantaila")
         else:
+            messagebox.showinfo(message="Erabiltzaile edo pasahitza txarto dago", title="ErabiltzaileTxartoIdentifikatu")
+            self.window.destroy()
             Identifikatu()
-            print("identifikatu")
 
     def erregistroPantaila(self,arg):
         self.window.destroy()

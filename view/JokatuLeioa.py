@@ -15,7 +15,7 @@ class JokatuLeioa(object):
 
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
-		self.window.geometry('500x500')
+		self.window.geometry('500x600')
 		self.window.title("Tetris jokoa")
 
 		button = tk.Button(self.window, text="Partida hasi")
