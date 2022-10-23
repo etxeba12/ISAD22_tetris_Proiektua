@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import model.datuBase as db
 import view.aukerenPantaila as ap
+from tkinter import messagebox
 
 Izena = ""
 
@@ -51,10 +52,14 @@ class erabiltzaileaEzabatu():
         # botoia atzera bueltatu
 
     def ezabatuErabil(self,Izena):
-        db.erabiltzaileEzabatu(Izena)
+        if(Izena != "iker"):
+            db.erabiltzaileEzabatu(Izena)
+        else:
+            messagebox.showinfo(message="erabiltzaile hau ezin da ezabatu", title="errorea")
         self.window.destroy()
         ap.aukerenPantaila()
 
     def atzerabueltatu(self):
         self.window.destroy()
         ap.aukerenPantaila()
+

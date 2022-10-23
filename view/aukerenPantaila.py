@@ -88,7 +88,7 @@ class aukerenPantaila():
         pa.PasahitzaAldatu()
 
     def ErabiltzaileEzabatu(self):
-        if Izena == "iker" or Izena == "imanol":
+        if Izena == "iker" : #aplikazioaren administratzaile bakarra
             self.window.destroy()
             ez.erabiltzaileaEzabatu()
         else:
