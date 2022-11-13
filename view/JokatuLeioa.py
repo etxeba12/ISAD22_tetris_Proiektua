@@ -2,7 +2,12 @@ import random
 import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
+import model.datuBase as db
+import pickle
 
+Izena = " "
+partidaJarraitu = False
+tablerogordeta = []
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
@@ -27,8 +32,14 @@ class JokatuLeioa(object):
 		puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa)
 		puntuazioalabel.pack()
 
+		# botoia pasahitza
+		buttonGorde = tk.Button(self.window, text=" PARTIDA GORDE ")
+		buttonGorde.pack()
+		# botoia pasahitza
+
 		canvas = TableroaPanela(master=self.window,Tamaina=tamaina, puntuazioalabel = puntuazioa)
 		button.configure(command=canvas.jolastu)
+		buttonGorde.configure(command=canvas.partida_gorde)
 		canvas.pack()
 		self.window.bind("<Up>", canvas.joku_kontrola)
 		self.window.bind("<Down>", canvas.joku_kontrola)
@@ -36,6 +47,15 @@ class JokatuLeioa(object):
 		self.window.bind("<Left>", canvas.joku_kontrola)
 
 		self.window.mainloop()
+
+	def partida_jarraitu(self):
+		partidaDatuak = db.partidaBerreskuratu(Izena)
+		partida = pickle.loads(partidaDatuak[0])
+		print(partida)
+		tablerogordeta =partida
+		tamaina = [partidaDatuak[3],partidaDatuak[4]]
+		abiadura = partidaDatuak[1]
+		JokatuLeioa(tamaina,abiadura) #tamaina y abidura
 
 class TableroaPanela(tk.Frame):
 
@@ -116,10 +136,27 @@ class TableroaPanela(tk.Frame):
 		finally:
 			self.marraztu_tableroa()
 
+	def partida_gorde(self):
+		self.after_cancel(self.jokatzen)
+		Gordetakopartida = [[ None for x in range(self.tamaina[0])]for y in range(self.tamaina[1])]
+		for i in range(self.tab.tamaina[1]):
+			print("i",i)
+			for t in range(self.tab.tamaina[0]):
+				print("t",t)
+				if (self.tab.tab[i][t] != None):
+					Gordetakopartida[i][t] = self.tab.tab[i][t]
+		serializatua = pickle.dumps(Gordetakopartida)
+		puntuazioapartida = self.tab.puntuazioa
+		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
+
 	def jolastu(self):
+		print("hola")
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
-		self.tab.hasieratu_tableroa()
+		if partidaJarraitu == False:
+			self.tab.hasieratu_tableroa()
+		else:
+			self.tab.kopiatu_tableroa(tablerogordeta)
 		pieza_posibleak = [Laukia, Zutabea, Lforma, LformaAlderantzizko, Zforma, ZformaAlderantzizko, Tforma]
 		self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 		self.marraztu_tableroa()

@@ -65,6 +65,11 @@ class aukerenPantaila():
         buttonMaila.pack()
         # maila aukeratu
 
+        # botoia partida jarraitu
+        buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
+        buttonJarraituPa.pack()
+        # botoia partida jarraitu
+
         # botoia pasahitza
         buttonPasahitza = tk.Button(self.window, text=" PASAHITZA ALDATU ", command=(self.PasahitzaLehioa))
         buttonPasahitza.pack()
@@ -98,6 +103,7 @@ class aukerenPantaila():
 
     def jokatuleioa(self,Maila):
         tamaina = []
+        jl.Izena = Izena
         if(Maila == "1" or Maila == "2" or Maila == "3"):
             if(Maila == "1"):
                 tamaina = [20,40]
@@ -118,3 +124,9 @@ class aukerenPantaila():
     def atzerabueltatu(self):
         self.window.destroy()
         Id.Identifikatu()
+
+    def partidaJarraitu(self):
+        self.window.destroy()
+        jl.Izena = Izena
+        jl.partidaJarraitu = True
+        jl.JokatuLeioa.partida_jarraitu(self)

@@ -46,3 +46,12 @@ def erabiltzaileEzabatu(Izena):
 def pasahitzaBerreskuratu(izena):
     res = cur.execute("SELECT izena,galdera1,galdera2 FROM erabiltzaileak WHERE izena=?", [izena])
     return res.fetchone()
+
+def partidaGorde(Izena,partida,abi,puntuazioapartida,x,y):
+    print(Izena)
+    res = cur.execute("UPDATE erabiltzaileak SET gordeta=?,puntupartida=?,abiadura=?,x=?,y=? WHERE izena=?",(partida,puntuazioapartida,abi,x,y,Izena))
+    con.commit()
+
+def partidaBerreskuratu(Izena):
+    res = cur.execute("SELECT gordeta,abiadura,puntupartida,x,y FROM erabiltzaileak WHERE izena=?", [Izena])
+    return res.fetchone()
