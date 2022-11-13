@@ -6,6 +6,7 @@ import model.datuBase as db
 import pickle
 
 Izena = " "
+puntuazioa = " "
 partidaJarraitu = False
 tablerogordeta = []
 
