@@ -15,8 +15,7 @@ class Tableroa():
 
 	def kopiatu_tableroa(self,tableroa):
 		for i in range(len(tableroa)):
-			for t in range(len(tableroa.tamaina[0])):
-				print(tableroa[i][t])
+			for t in range(len(tableroa[0])):
 				self.tab[i][t] = tableroa[i][t]
 		self.pieza = None
 

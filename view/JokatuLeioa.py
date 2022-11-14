@@ -50,10 +50,10 @@ class JokatuLeioa(object):
 		self.window.mainloop()
 
 	def partida_jarraitu(self):
+		global tablerogordeta
 		partidaDatuak = db.partidaBerreskuratu(Izena)
 		partida = pickle.loads(partidaDatuak[0])
-		print(partida)
-		tablerogordeta =partida
+		tablerogordeta = partida
 		tamaina = [partidaDatuak[3],partidaDatuak[4]]
 		abiadura = partidaDatuak[1]
 		JokatuLeioa(tamaina,abiadura) #tamaina y abidura
@@ -151,7 +151,6 @@ class TableroaPanela(tk.Frame):
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
 
 	def jolastu(self):
-		print("hola")
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		if partidaJarraitu == False:
