@@ -1,3 +1,8 @@
+import model.datuBase as db
+
+Izena = ""
+res = ()
+
 class Pieza:
 	def __init__(self, forma, kolorea):
 		self.forma = forma
@@ -39,29 +44,42 @@ class Pieza:
 
 class Laukia(Pieza):
 	def __init__(self, kolorea=None):
-		super(Laukia, self).__init__([[0,0],[0,1],[1,0],[1,1]], kolorea='yellow')
+		res = db.kolorea_lortu(Izena)
+		super(Laukia, self).__init__([[0,0],[0,1],[1,0],[1,1]], kolorea=res[10])
 
 class Zutabea(Pieza):
 	def __init__(self, kolorea=None):
-		super(Zutabea, self).__init__([[0,-1],[0,0],[0,1],[0,2]], kolorea='cyan')
+		res = db.kolorea_lortu(Izena)
+		print(res[11])
+		super(Zutabea, self).__init__([[0,-1],[0,0],[0,1],[0,2]], kolorea=res[11])
 
 class Lforma(Pieza):
 	def __init__(self, kolorea=None):
-		super(Lforma, self).__init__([[-1,-1],[0,-1],[0,0],[0,1]], kolorea='blue')
+		res = db.kolorea_lortu(Izena)
+		print(res[12])
+		super(Lforma, self).__init__([[-1,-1],[0,-1],[0,0],[0,1]], kolorea=res[12])
 
 class LformaAlderantzizko(Pieza):
 	def __init__(self, kolorea=None):
-		super(LformaAlderantzizko, self).__init__([[1,-1],[0,-1],[0,0],[0,1]], kolorea='orange')
+		res = db.kolorea_lortu(Izena)
+		print(res[13])
+		super(LformaAlderantzizko, self).__init__([[1,-1],[0,-1],[0,0],[0,1]], kolorea=res[13])
 
 
 class Zforma(Pieza):
 	def __init__(self, kolorea=None):
-		super(Zforma, self).__init__([[0,-1],[0,0],[-1,0],[-1,1]], kolorea='green')
+		res = db.kolorea_lortu(Izena)
+		print(res[14])
+		super(Zforma, self).__init__([[0,-1],[0,0],[-1,0],[-1,1]], kolorea=res[14])
 
 class ZformaAlderantzizko(Pieza):
 	def __init__(self, kolorea=None):
-		super(ZformaAlderantzizko, self).__init__([[0,-1],[0,0],[1,0],[1,1]], kolorea='red')
+		res = db.kolorea_lortu(Izena)
+		print(res[15])
+		super(ZformaAlderantzizko, self).__init__([[0,-1],[0,0],[1,0],[1,1]], kolorea=res[15])
 
 class Tforma(Pieza):
 	def __init__(self, kolorea=None):
-		super(Tforma, self).__init__([[-1,0],[0,0],[1,0],[0,1]], kolorea='purple')
+		res = db.kolorea_lortu(Izena)
+		print(res[16])
+		super(Tforma, self).__init__([[-1,0],[0,0],[1,0],[0,1]], kolorea=res[16])

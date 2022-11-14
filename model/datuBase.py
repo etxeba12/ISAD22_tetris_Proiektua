@@ -48,10 +48,31 @@ def pasahitzaBerreskuratu(izena):
     return res.fetchone()
 
 def partidaGorde(Izena,partida,abi,puntuazioapartida,x,y):
-    print(Izena)
     res = cur.execute("UPDATE erabiltzaileak SET gordeta=?,puntupartida=?,abiadura=?,x=?,y=? WHERE izena=?",(partida,puntuazioapartida,abi,x,y,Izena))
     con.commit()
 
 def partidaBerreskuratu(Izena):
     res = cur.execute("SELECT gordeta,abiadura,puntupartida,x,y FROM erabiltzaileak WHERE izena=?", [Izena])
     return res.fetchone()
+
+def kolorea_lortu(Izena):
+    print(Izena)
+    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?", [Izena])
+    return res.fetchone()
+
+def kolore_Pertsonalizatu(Izena,forma,kolorea):
+    if forma == "laukia":
+        res = cur.execute("UPDATE erabiltzaileak SET laukia=? WHERE izena=?", (kolorea, Izena))
+    elif forma == "zutabea":
+        res = cur.execute("UPDATE erabiltzaileak SET zutabea=? WHERE izena=?", (kolorea, Izena))
+    elif forma == "lforma":
+        res = cur.execute("UPDATE erabiltzaileak SET lforma=? WHERE izena=?", (kolorea, Izena))
+    elif forma == "lformaAlderantzizko":
+        res = cur.execute("UPDATE erabiltzaileak SET lformaAlderantzizko=? WHERE izena=?", (kolorea, Izena))
+    elif forma == "zforma":
+        res = cur.execute("UPDATE erabiltzaileak SET zforma=? WHERE izena=?", (kolorea, Izena))
+    elif forma == "zformaAlderantzizko":
+        res = cur.execute("UPDATE erabiltzaileak SET zformaAlderantzizko=? WHERE izena=?", (kolorea, Izena))
+    elif forma == "tforma":
+        res = cur.execute("UPDATE erabiltzaileak SET tforma=? WHERE izena=?", (kolorea, Izena))
+    con.commit()

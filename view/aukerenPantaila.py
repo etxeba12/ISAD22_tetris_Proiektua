@@ -6,6 +6,8 @@ import view.PasahitzaAldatu as pa
 import view.erabiltzaileaEzabatu as ez
 import view.JokatuLeioa as jl
 import view.Identifikatu as Id
+import view.pertsonalizatu as pp
+import model.Piezak as pi
 
 Izena = " "
 listaDatuak = ""
@@ -16,8 +18,10 @@ class aukerenPantaila():
     def __init__(self):
         super(aukerenPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('300x340')
+        self.window.geometry('300x400')
         self.window.title("Aukeren pantaila")
+        pi.Izena = Izena
+        pp.Izena = Izena
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img)
@@ -69,6 +73,11 @@ class aukerenPantaila():
         buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
         buttonJarraituPa.pack()
         # botoia partida jarraitu
+
+        #botoia pertsonalizatu
+        buttonPertsonalizatu = tk.Button(self.window, text=" PERTSONALIZATU ", command=(self.pertsonalizatu))
+        buttonPertsonalizatu.pack()
+        #botoia pertsonalizatu
 
         # botoia pasahitza
         buttonPasahitza = tk.Button(self.window, text=" PASAHITZA ALDATU ", command=(self.PasahitzaLehioa))
@@ -130,3 +139,7 @@ class aukerenPantaila():
         jl.Izena = Izena
         jl.partidaJarraitu = True
         jl.JokatuLeioa.partida_jarraitu(self)
+
+    def pertsonalizatu(self):
+        self.window.destroy()
+        pp.pertsonalizatu()
