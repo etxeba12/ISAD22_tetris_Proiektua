@@ -3,6 +3,7 @@ import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
 import model.datuBase as db
+import view.aukerenPantaila as ap
 import pickle
 # iker imanol
 Izena = " "
@@ -12,7 +13,6 @@ tablerogordeta = []
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
-
 	def __init__(self,tamaina,abiadura):
 
 		global abi
@@ -28,7 +28,7 @@ class JokatuLeioa(object):
 		button.pack()
 
 		puntuazioa = tk.StringVar()
-		puntuazioa.set("Puntuazioa: 0")
+		puntuazioa.set("Puntuazioa: ")
 
 		puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa)
 		puntuazioalabel.pack()
@@ -38,33 +38,41 @@ class JokatuLeioa(object):
 		buttonGorde.pack()
 		# botoia pasahitza
 
-		canvas = TableroaPanela(master=self.window,Tamaina=tamaina, puntuazioalabel = puntuazioa)
-		button.configure(command=canvas.jolastu)
-		buttonGorde.configure(command=canvas.partida_gorde)
-		canvas.pack()
-		self.window.bind("<Up>", canvas.joku_kontrola)
-		self.window.bind("<Down>", canvas.joku_kontrola)
-		self.window.bind("<Right>", canvas.joku_kontrola)
-		self.window.bind("<Left>", canvas.joku_kontrola)
+		self.canvas = TableroaPanela(master=self.window,Tamaina=tamaina, puntuazioalabel=puntuazioa, master2=self)
+		button.configure(command=self.canvas.jolastu)
+		buttonGorde.configure(command=self.canvas.partida_gorde)
+		self.canvas.pack()
+		self.window.bind("<Up>", self.canvas.joku_kontrola)
+		self.window.bind("<Down>", self.canvas.joku_kontrola)
+		self.window.bind("<Right>", self.canvas.joku_kontrola)
+		self.window.bind("<Left>", self.canvas.joku_kontrola)
 
 		self.window.mainloop()
 
 	def partida_jarraitu(self):
 		global tablerogordeta
+		global puntu
 		partidaDatuak = db.partidaBerreskuratu(Izena)
 		partida = pickle.loads(partidaDatuak[0])
 		tablerogordeta = partida
 		tamaina = [partidaDatuak[3],partidaDatuak[4]]
 		abiadura = partidaDatuak[1]
-		JokatuLeioa(tamaina,abiadura) #tamaina y abidura
+		puntu = partidaDatuak[2]
+		print(puntu)
+		JokatuLeioa(tamaina,abiadura)
+
+	def aukerenPantailaraJoan(self):
+		self.window.destroy()
+		ap.aukerenPantaila()
 
 class TableroaPanela(tk.Frame):
 
-	def __init__(self, Tamaina, gelazka_tamaina=20,puntuazioalabel=None, master=None):
+	def __init__(self, Tamaina, gelazka_tamaina=20,puntuazioalabel=None, master=None, master2=None):
 		tk.Frame.__init__(self, master)
 		self.puntuazio_panela = puntuazioalabel
 		self.tamaina = Tamaina
 		self.gelazka_tamaina = gelazka_tamaina
+		self.master_ = master2
 
 		self.canvas = tk.Canvas(
 			width=self.tamaina[0]  * self.gelazka_tamaina+1,
@@ -79,8 +87,7 @@ class TableroaPanela(tk.Frame):
 
 
 	def marratu_gelazka(self, x,y,color):
-		self.canvas.create_rectangle(x*self.gelazka_tamaina, y*self.gelazka_tamaina,
-									(x+1)*self.gelazka_tamaina, (y+1)*self.gelazka_tamaina, fill=color)
+		self.canvas.create_rectangle(x*self.gelazka_tamaina, y*self.gelazka_tamaina,(x+1)*self.gelazka_tamaina, (y+1)*self.gelazka_tamaina, fill=color)
 
 	def tableroa_ezabatu(self):
 		self.canvas.delete("all")
@@ -98,7 +105,6 @@ class TableroaPanela(tk.Frame):
 				y = self.tab.posizioa[1] + self.tab.pieza.get_y(i)
 				self.marratu_gelazka(y,x,self.tab.pieza.get_kolorea())
 		self.puntuazioa_eguneratu()
-
 
 	def pausu_bat(self):
 		try:
@@ -119,8 +125,6 @@ class TableroaPanela(tk.Frame):
 	def puntuazioa_eguneratu(self):
 		if self.puntuazio_panela:
 			self.puntuazio_panela.set(f"Puntuazioa: {self.tab.puntuazioa}")
-
-		
 
 	def joku_kontrola(self, event):
 		try:
@@ -149,6 +153,7 @@ class TableroaPanela(tk.Frame):
 		serializatua = pickle.dumps(Gordetakopartida)
 		puntuazioapartida = self.tab.puntuazioa
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
+		JokatuLeioa.aukerenPantailaraJoan(self.master_)
 
 	def jolastu(self):
 		if self.jokatzen:
@@ -156,7 +161,7 @@ class TableroaPanela(tk.Frame):
 		if partidaJarraitu == False:
 			self.tab.hasieratu_tableroa()
 		else:
-			self.tab.kopiatu_tableroa(tablerogordeta)
+			self.tab.kopiatu_tableroa(tablerogordeta,puntu)
 		pieza_posibleak = [Laukia, Zutabea, Lforma, LformaAlderantzizko, Zforma, ZformaAlderantzizko, Tforma]
 		self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 		self.marraztu_tableroa()

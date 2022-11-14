@@ -30,7 +30,7 @@ class Identifikatu():
         panel.pack(side="top", fill="both", expand="no")
 
         izena = tk.StringVar()
-        izena.set("  ERABILTZAILE IZENA  ")
+        izena.set("  ERABILTZAILE IZENA  " )
 
         izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken",)
         izenalabel.pack()

@@ -13,11 +13,12 @@ class Tableroa():
 		self.pieza = None
 		self.puntuazioa = 0
 
-	def kopiatu_tableroa(self,tableroa):
+	def kopiatu_tableroa(self,tableroa,puntu):
 		for i in range(len(tableroa)):
 			for t in range(len(tableroa[0])):
 				self.tab[i][t] = tableroa[i][t]
 		self.pieza = None
+		self.puntuazioa = puntu
 
 	def probatu_mugimendua(self, pos_berria):
 		for i in range(4):
