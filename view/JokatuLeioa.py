@@ -4,7 +4,7 @@ from model.Tableroa import Tableroa
 from model.Piezak import *
 import model.datuBase as db
 import pickle
-
+# iker imanol
 Izena = " "
 puntuazioa = " "
 partidaJarraitu = False
