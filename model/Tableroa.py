@@ -1,14 +1,24 @@
 from model import Piezak
 
-class Tableroa:
-	def __init__(self, tamaina=(10,20)):
+
+
+class Tableroa():
+
+	def __init__(self, tamaina):
 		self.tamaina = tamaina
 		self.hasieratu_tableroa()
 
 	def hasieratu_tableroa(self):
-		self.tab = [ [ None for y in range(self.tamaina[0])]for x in range(self.tamaina[1])]
+		self.tab = [[ None for y in range(self.tamaina[0])]for x in range(self.tamaina[1])]
 		self.pieza = None
 		self.puntuazioa = 0
+
+	def kopiatu_tableroa(self,tableroa):
+		for i in range(len(tableroa)):
+			for t in range(len(tableroa.tamaina[0])):
+				print(tableroa[i][t])
+				self.tab[i][t] = tableroa[i][t]
+		self.pieza = None
 
 	def probatu_mugimendua(self, pos_berria):
 		for i in range(4):

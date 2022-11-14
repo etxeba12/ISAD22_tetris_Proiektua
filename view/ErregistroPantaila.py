@@ -1,19 +1,33 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+import model.datuBase as db
 import view.Identifikatu as Id
+from tkinter import messagebox
 
 class ErregistroPantaila():
+
+    Izena = ""
+    Pasahitza = ""
+    Galdera1 = ""
+    Galdera2 = ""
 
     def __init__(self):
         super(ErregistroPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('220x350')
+        self.window.geometry('220x330')
         self.window.configure(bg='white')
         self.window.title("Erregistro pantaila")
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img)
         panel.pack(side="top", fill="both", expand="no")
+
+        def datuakJaso():
+            Izena = izenaErabiltzaile.get()
+            Pasahitza = ErabiltzailePasahitza.get()
+            Galdera1 = galdera1erantzun.get()
+            Galdera2 = galdera2erantzun.get()
+            self.erregistratu(Izena,Pasahitza,Galdera1,Galdera2)
 
         #izena
         izena = tk.StringVar()
@@ -64,12 +78,41 @@ class ErregistroPantaila():
         #galdera 2 testua
 
         # botoia erregistratu
-        button = tk.Button(self.window, text="ERREGISTRATU", command=(self.identifikaturaBueltatu))
+        button = tk.Button(self.window, text="ERREGISTRATU", command=(datuakJaso))
         button.pack()
         # botoia erregistratu
 
+        # botoia atrera bueltatu
+        button = tk.Button(self.window, text="ATZERA BUELATU", command=(self.atzerabueltatu))
+        button.pack()
+        # botoia atzera bueltatu
+
         self.window.mainloop()
 
-    def identifikaturaBueltatu(self):
+    def erregistratu(self,Izena,Pasahitza,Galdera1,Galdera2):
+
+        datuOnak= self.datuakKomprobatu(Izena,Pasahitza,Galdera1,Galdera2)
+
+        if(datuOnak):
+            erabilsartutadago = db.erregistratu(Izena, Pasahitza, Galdera1, Galdera2)
+            if(erabilsartutadago):
+                messagebox.showinfo(message="Izena hau hartuta dago", title="ErregistroError")
+                self.window.destroy()
+                ErregistroPantaila()
+            else:
+                self.window.destroy()
+                Id.Identifikatu()
+        else:
+            messagebox.showinfo(message="Datu guztiak bete behar dira", title="ErregistroError")
+            self.window.destroy()
+            ErregistroPantaila()
+
+    def atzerabueltatu(self):
         self.window.destroy()
         Id.Identifikatu()
+
+    def datuakKomprobatu(self, Izena,Pasahitza,Galdera1,Galdera2):
+        if len(Izena)==0 or len(Pasahitza)==0 or len(Galdera1)==0 or len(Galdera1)==0:
+            return False
+        else:
+            return True
