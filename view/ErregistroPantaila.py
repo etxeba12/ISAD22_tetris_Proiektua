@@ -14,12 +14,12 @@ class ErregistroPantaila():
     def __init__(self):
         super(ErregistroPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('220x330')
+        self.window.geometry('300x400')
         self.window.configure(bg='white')
         self.window.title("Erregistro pantaila")
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img)
+        panel = tk.Label(self.window, image=img,  bg='white')
         panel.pack(side="top", fill="both", expand="no")
 
         def datuakJaso():
@@ -91,7 +91,7 @@ class ErregistroPantaila():
 
     def erregistratu(self,Izena,Pasahitza,Galdera1,Galdera2):
 
-        datuOnak= self.datuakKomprobatu(Izena,Pasahitza,Galdera1,Galdera2)
+        datuOnak= self.datuakKonrobatu(Izena,Pasahitza,Galdera1,Galdera2)
 
         if(datuOnak):
             erabilsartutadago = db.erregistratu(Izena, Pasahitza, Galdera1, Galdera2)
@@ -111,8 +111,8 @@ class ErregistroPantaila():
         self.window.destroy()
         Id.Identifikatu()
 
-    def datuakKomprobatu(self, Izena,Pasahitza,Galdera1,Galdera2):
-        if len(Izena)==0 or len(Pasahitza)==0 or len(Galdera1)==0 or len(Galdera1)==0:
+    def datuakKonrobatu(self,Izena,Pasahitza,Galdera1,Galdera2):
+        if len(Izena)==0 or len(Pasahitza)==0 or len(Galdera1)==0 or len(Galdera2)==0:
             return False
         else:
             return True

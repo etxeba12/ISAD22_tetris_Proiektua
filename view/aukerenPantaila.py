@@ -18,13 +18,14 @@ class aukerenPantaila():
     def __init__(self):
         super(aukerenPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('300x400')
+        self.window.geometry('300x600')
         self.window.title("Aukeren pantaila")
+        self.window.configure(bg='white')
         pi.Izena = Izena
         pp.Izena = Izena
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img)
+        panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
 
         listaDatuak = db.datuakLortu(Izena)
@@ -37,7 +38,7 @@ class aukerenPantaila():
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  ")
 
-        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", )
+        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken")
         izenalabel.pack()
 
         izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(value=listaDatuak[0]), state=tk.DISABLED,borderwidth=3, relief="sunken", )
@@ -48,12 +49,12 @@ class aukerenPantaila():
         puntuazioa = tk.StringVar()
         puntuazioa.set("        PUNTUAZIOA        ")
 
-        puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa, borderwidth=3, relief="sunken", )
+        puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa, borderwidth=3, relief="sunken" )
         puntuazioalabel.pack()
 
         puntuazioErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(value=listaDatuak[2]), state=tk.DISABLED,borderwidth=3, relief="sunken", )
         puntuazioErabiltzaile.pack()
-        # Puntuazioa
+        #Puntuazioa
 
         # maila aukeratu
         aukeratumaila = tk.StringVar()
@@ -70,8 +71,9 @@ class aukerenPantaila():
         # maila aukeratu
 
         # botoia partida jarraitu
-        buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
-        buttonJarraituPa.pack()
+        if (db.jarraituPartida(Izena)):
+            buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
+            buttonJarraituPa.pack()
         # botoia partida jarraitu
 
         #botoia pertsonalizatu
@@ -85,8 +87,9 @@ class aukerenPantaila():
         # botoia pasahitza
 
         # botoia admin
-        buttonAdmin = tk.Button(self.window, text=" EZABATU JOKALARI ", command=(self.ErabiltzaileEzabatu))
-        buttonAdmin.pack()
+        if (db.admin_da(Izena)):
+            buttonAdmin = tk.Button(self.window, text=" EZABATU JOKALARI ", command=(self.ErabiltzaileEzabatu))
+            buttonAdmin.pack()
         # botoia admin
 
         # botoia atzera bueltatu

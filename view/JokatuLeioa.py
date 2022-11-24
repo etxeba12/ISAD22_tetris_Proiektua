@@ -5,7 +5,7 @@ from model.Piezak import *
 import model.datuBase as db
 import view.aukerenPantaila as ap
 import pickle
-# iker imanol
+
 Izena = " "
 puntuazioa = " "
 partidaJarraitu = False
@@ -21,26 +21,25 @@ class JokatuLeioa(object):
 
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
-		self.window.geometry('500x600')
+		self.window.geometry('500x900')
 		self.window.title("Tetris jokoa")
 
-		button = tk.Button(self.window, text="Partida hasi")
+		button = tk.Button(self.window, text="PARTIDA HASI")
 		button.pack()
 
+		# botoia pasahitza
+		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.aukerenPantailaraJoan)
+		buttonAtzera.pack()
+		# botoia pasahitza
+
 		puntuazioa = tk.StringVar()
-		puntuazioa.set("Puntuazioa: ")
+		puntuazioa.set("Puntuazioa: 0")
 
 		puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa)
 		puntuazioalabel.pack()
 
-		# botoia pasahitza
-		buttonGorde = tk.Button(self.window, text=" PARTIDA GORDE ")
-		buttonGorde.pack()
-		# botoia pasahitza
-
 		self.canvas = TableroaPanela(master=self.window,Tamaina=tamaina, puntuazioalabel=puntuazioa, master2=self)
-		button.configure(command=self.canvas.jolastu)
-		buttonGorde.configure(command=self.canvas.partida_gorde)
+		button.configure(command=lambda: self.canvas.jolastu(button, self.window))
 		self.canvas.pack()
 		self.window.bind("<Up>", self.canvas.joku_kontrola)
 		self.window.bind("<Down>", self.canvas.joku_kontrola)
@@ -48,6 +47,7 @@ class JokatuLeioa(object):
 		self.window.bind("<Left>", self.canvas.joku_kontrola)
 
 		self.window.mainloop()
+
 
 	def partida_jarraitu(self):
 		global tablerogordeta
@@ -124,7 +124,7 @@ class TableroaPanela(tk.Frame):
 
 	def puntuazioa_eguneratu(self):
 		if self.puntuazio_panela:
-			self.puntuazio_panela.set(f"Puntuazioa: {self.tab.puntuazioa}")
+			self.puntuazio_panela.set(f"Puntuazioa: {(self.tab.puntuazioa)}")
 
 	def joku_kontrola(self, event):
 		try:
@@ -155,10 +155,13 @@ class TableroaPanela(tk.Frame):
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
 		JokatuLeioa.aukerenPantailaraJoan(self.master_)
 
-	def jolastu(self):
+	def jolastu(self, button, window):
+		button.pack_forget()
+		buttonGorde = tk.Button(window, text=" PARTIDA GORDE ", command=self.partida_gorde)
+		buttonGorde.pack()
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
-		if partidaJarraitu == False:
+		if not partidaJarraitu:
 			self.tab.hasieratu_tableroa()
 		else:
 			self.tab.kopiatu_tableroa(tablerogordeta,puntu)
@@ -166,4 +169,4 @@ class TableroaPanela(tk.Frame):
 		self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 		self.marraztu_tableroa()
 		self.jokatzen = self.after(400, self.pausu_bat)
-		
+
