@@ -5,32 +5,23 @@ from model.Piezak import *
 import model.datuBase as db
 import view.aukerenPantaila as ap
 import pickle
-from pygame import mixer
 
 Izena = " "
-Maila = " "
 puntuazioa = " "
 partidaJarraitu = False
 tablerogordeta = []
-Kolorea = " "
-
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
 	def __init__(self,tamaina,abiadura):
 
-		global abi, musikaHasi
+		global abi
 
 		abi = abiadura
-		self.musikaHasi = False
 
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
 		self.window.geometry('500x900')
-		if db.kolBera(Izena,Kolorea):
-			kolorea=db.pantailaKolEman(Izena)
-
-		self.window.configure(bg=kolorea)
 		self.window.title("Tetris jokoa")
 
 		button = tk.Button(self.window, text="PARTIDA HASI")
@@ -67,34 +58,17 @@ class JokatuLeioa(object):
 		tamaina = [partidaDatuak[3],partidaDatuak[4]]
 		abiadura = partidaDatuak[1]
 		puntu = partidaDatuak[2]
+		print(puntu)
 		JokatuLeioa(tamaina,abiadura)
 
 	def aukerenPantailaraJoan(self):
 		self.window.destroy()
-		self.musikaGelditu()
 		ap.aukerenPantaila()
-
-
-	def musikaEntzun(self):
-		Musika=db.musEman(Izena)
-		mus = str(Musika)
-		musika = mus[2:len(Musika) - 4]
-		mus = musika
-		erag = f"{mus}.mp3"
-		mixer.init()  # Initialzing pyamge mixer
-		mixer.music.load(erag)  # Loading Music File
-		self.musikaHasi=True
-		mixer.music.play()  # Playing Music with Pygame
-
-	def musikaGelditu(self):
-		if self.musikaHasi:
-			mixer.music.stop()
 
 class TableroaPanela(tk.Frame):
 
 	def __init__(self, Tamaina, gelazka_tamaina=20,puntuazioalabel=None, master=None, master2=None):
 		tk.Frame.__init__(self, master)
-
 		self.puntuazio_panela = puntuazioalabel
 		self.tamaina = Tamaina
 		self.gelazka_tamaina = gelazka_tamaina
@@ -171,19 +145,20 @@ class TableroaPanela(tk.Frame):
 		self.after_cancel(self.jokatzen)
 		Gordetakopartida = [[ None for x in range(self.tamaina[0])]for y in range(self.tamaina[1])]
 		for i in range(self.tab.tamaina[1]):
+			print("i",i)
 			for t in range(self.tab.tamaina[0]):
+				print("t",t)
 				if (self.tab.tab[i][t] != None):
 					Gordetakopartida[i][t] = self.tab.tab[i][t]
-		db.puntuazioGordeMailaka(Izena,self.tab.puntuazioa,Maila)
 		serializatua = pickle.dumps(Gordetakopartida)
 		puntuazioapartida = self.tab.puntuazioa
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
 		JokatuLeioa.aukerenPantailaraJoan(self.master_)
 
-
 	def jolastu(self, button, window):
-
-		button.configure(text=" PARTIDA GORDE ", command=self.partida_gorde)
+		button.pack_forget()
+		buttonGorde = tk.Button(window, text=" PARTIDA GORDE ", command=self.partida_gorde)
+		buttonGorde.pack()
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		if not partidaJarraitu:
@@ -194,6 +169,4 @@ class TableroaPanela(tk.Frame):
 		self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 		self.marraztu_tableroa()
 		self.jokatzen = self.after(400, self.pausu_bat)
-		JokatuLeioa.musikaEntzun(self.master_)
-
 
