@@ -15,6 +15,12 @@ class Identifikatu():
     def __init__(self):
         super(Identifikatu, self).__init__()
         db.taulaSortu()
+        db.musikaEguneratu('Iker','Tetris')
+        db.musikaEguneratu('Imanol', 'Tetris')
+        db.musikaEguneratu('eider', 'Tetris')
+        db.pantailaKolEguneratu('Iker', 'white')
+        db.pantailaKolEguneratu('Imanol', 'white')
+        db.pantailaKolEguneratu('eider', 'white')
         self.window = tk.Tk()
         self.window.geometry('300x300')
         self.window.configure(bg='white')

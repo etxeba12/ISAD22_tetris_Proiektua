@@ -12,8 +12,45 @@ def taulaSortu():
                     "zutabea VARCHAR(15), lforma VARCHAR(15), lforma VARCHAR(15),zforma VARCHAR(15),"
                     "tforma VARCHAR(15), admin BOOLEAN )")
         #TODO: CREATE TABLE BUKATU EGITEN
-#def insertZutabe():
-    # cur.execute("ALTER TABLE erabiltzaileak ADD admin Boolean")
+def insertZutabe():
+     cur.execute("ALTER TABLE erabiltzaileak ADD pantaila VARCHAR(15)")
+     cur.execute("ALTER TABLE erabiltzaileak ADD musika VARCHAR(15)")
+def pantailaKolEguneratu(izena, kol):
+    if not kolBera(izena, kol):
+        erag = f"UPDATE erabiltzaileak SET pantaila='{kol}' WHERE izena='{izena}'"
+        cur.execute(erag)
+        con.commit()
+def kolBera(izena, kol):
+    erag = f"SELECT pantaila FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    # Ez bada gorde (None) orduan ez da jarraitu aukerarik
+    return ema == kol
+
+def pantailaKolEman(izena):
+    erag = f"SELECT pantaila FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    return ema
+
+def musikaEguneratu(izena, mus):
+    if not musBera(izena, mus):
+        erag = f"UPDATE erabiltzaileak SET musika='{mus}' WHERE izena='{izena}'"
+        cur.execute(erag)
+        con.commit()
+def musBera(izena, mus):
+    erag = f"SELECT musika FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    # Ez bada gorde (None) orduan ez da jarraitu aukerarik
+    return ema == mus
+
+def musEman(izena):
+    erag = f"SELECT musika FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    return ema
+
 def identifikatu(Izena,Pasahitza):
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=? AND pasahitza=?",(Izena,Pasahitza))
     if(res.fetchone() is None):
@@ -33,8 +70,8 @@ def erregistratu(izena,pasahitza,gald1,gald2):
     badagoIzenBera=True
     if(res.fetchone() is None):
         #Erabiltzaile izena sartuta ez badago, sartzen dugu
-        erag = f"INSERT INTO erabiltzaileak (izena, pasahitza, puntuazioa, galdera1, galdera2, admin) " \
-               f"VALUES ('{izena}',0,'{pasahitza}','{gald1}','{gald2}', False)"
+        erag = f"INSERT INTO erabiltzaileak (izena, pasahitza, puntuazioa, galdera1, galdera2, admin, pantaila, musika) " \
+               f"VALUES ('{izena}','{pasahitza}',0,'{gald1}','{gald2}', False, 'white', 'Tetris')"
         cur.execute(erag)
         con.commit()
         admin_eg(izena)
@@ -45,20 +82,17 @@ def datuakLortu(Izena):
     return res.fetchone()
 
 def jarraituPartida (izena):
-    #TODO HAU BEGIRATU--> NONE EZ DENEAN, NONE DELA EMATEN BAITU
     erag=f"SELECT gordeta FROM erabiltzaileak WHERE izena='{izena}'"
     res= cur.execute(erag)
-    print(res.fetchone())
-    ema= not(res.fetchone() is None) #Ez bada gorde (None) orduan ez da jarraitu aukerarik
-    print(izena)
-
-    print(ema)
-    return ema
+    ema=res.fetchone()
+    #Ez bada gorde (None) orduan ez da jarraitu aukerarik
+    return not( ema[0] is None)
 
 def admin_da(izena):
     erag=f"SELECT admin FROM erabiltzaileak WHERE izena='{izena}'"
     res = cur.execute(erag)
-    return res.fetchone()
+    ema= res.fetchone()
+    return ema[0]
 
 def pasahitzaAldatu(izena,P1):
     res = cur.execute("UPDATE erabiltzaileak SET pasahitza=? WHERE izena=?",(P1,izena))
@@ -85,7 +119,6 @@ def partidaBerreskuratu(Izena):
     return res.fetchone()
 
 def kolorea_lortu(Izena):
-    print(Izena)
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?", [Izena])
     return res.fetchone()
 

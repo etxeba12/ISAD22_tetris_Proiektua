@@ -6,7 +6,7 @@ import view.PasahitzaAldatu as pa
 import view.erabiltzaileaEzabatu as ez
 import view.JokatuLeioa as jl
 import view.Identifikatu as Id
-import view.pertsonalizatu as pp
+import view.Pertsonalizatu as pp
 import model.Piezak as pi
 
 Izena = " "
@@ -60,7 +60,7 @@ class aukerenPantaila():
         aukeratumaila = tk.StringVar()
         aukeratumaila.set("    MAILA AUKERATU    ")
 
-        aukeratumailalabel = tk.Label(self.window, textvariable=aukeratumaila, borderwidth=3, relief="sunken", )
+        aukeratumailalabel = tk.Label(self.window, textvariable=aukeratumaila, borderwidth=3, relief="sunken")
         aukeratumailalabel.pack()
 
         maila = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(),state=tk.NORMAL, borderwidth=3, relief="sunken", )
@@ -71,7 +71,7 @@ class aukerenPantaila():
         # maila aukeratu
 
         # botoia partida jarraitu
-        if (db.jarraituPartida(Izena)):
+        if  (db.jarraituPartida(Izena)):
             buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
             buttonJarraituPa.pack()
         # botoia partida jarraitu
@@ -105,7 +105,7 @@ class aukerenPantaila():
         pa.PasahitzaAldatu(False)
 
     def ErabiltzaileEzabatu(self):
-        if Izena == "iker" : #aplikazioaren administratzaile bakarra da
+        if db.admin_da(Izena):
             self.window.destroy()
             ez.erabiltzaileaEzabatu()
         else:
@@ -114,8 +114,11 @@ class aukerenPantaila():
             aukerenPantaila()
 
     def jokatuleioa(self,Maila):
+        jl.partidaJarraitu=False
         tamaina = []
         jl.Izena = Izena
+        jl.Kolorea= db.pantailaKolEman(Izena)
+        jl.Musika=db.musEman(Izena)
         if(Maila == "1" or Maila == "2" or Maila == "3"):
             if(Maila == "1"):
                 tamaina = [20,40]
@@ -140,9 +143,10 @@ class aukerenPantaila():
     def partidaJarraitu(self):
         self.window.destroy()
         jl.Izena = Izena
+        jl.Kolorea = db.pantailaKolEman(Izena)
         jl.partidaJarraitu = True
         jl.JokatuLeioa.partida_jarraitu(self)
 
     def pertsonalizatu(self):
         self.window.destroy()
-        pp.pertsonalizatu()
+        pp.Pertsonalizatu()
