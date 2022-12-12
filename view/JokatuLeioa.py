@@ -15,13 +15,15 @@ partidaJarraitu = False
 tablerogordeta = []
 Kolorea = " "
 
+
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
 	def __init__(self,tamaina,abiadura):
 
-		global abi
+		global abi, musikaHasi
 
 		abi = abiadura
+		self.musikaHasi = False
 
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
@@ -82,10 +84,12 @@ class JokatuLeioa(object):
 		erag = f"{mus}.mp3"
 		mixer.init()  # Initialzing pyamge mixer
 		mixer.music.load(erag)  # Loading Music File
+		self.musikaHasi=True
 		mixer.music.play()  # Playing Music with Pygame
 
 	def musikaGelditu(self):
-		mixer.music.stop()
+		if self.musikaHasi:
+			mixer.music.stop()
 
 class TableroaPanela(tk.Frame):
 

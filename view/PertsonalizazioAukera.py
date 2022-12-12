@@ -31,7 +31,16 @@ class PertsonalizazioAukera():
 
     def pertsonalizazioGorde(self, comboLaukiak, comboKoloreak):
         forma = comboLaukiak.get()
-        kolorea = comboKoloreak.get()
+        hiztegia_kol = {
+            "horia": "yellow",
+            "zian": "cyan",
+            "urdina": "blue",
+            "laranja": "orange",
+            'berdea': "green",
+            'gorria': "red",
+            'morea': "purple",
+        }
+        kolorea = hiztegia_kol[comboKoloreak.get()]
         db.kolore_Pertsonalizatu(Izena, forma, kolorea)
         self.apBueltatu()
 
@@ -66,12 +75,15 @@ class PertsonalizazioAukera():
 
         # combobox Koloreak
         comboKoloreak = ttk.Combobox(self.window, width=17)
-        opciones = ["yellow", "cyan", "blue", "orange", "green", "red", "purple"]
-        comboKoloreak['values'] = opciones
+     #   opciones = ["yellow", "cyan", "blue", "orange", "green", "red", "purple"]
+        #comboKoloreak['values'] = opciones
+       # comboKoloreak.pack()
+        opcionesEus=['horia','zian','urdina','laranja','berdea','gorria','morea']
+        comboKoloreak['values'] = opcionesEus
         comboKoloreak.pack()
         if pantaila:
             # botoia gorde
-            buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak)  )
+            buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak) )
             buttonGorde.pack()
 
             buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
@@ -81,7 +93,17 @@ class PertsonalizazioAukera():
             self.adreiluAldatu(comboKoloreak)
 
     def pantailaKolAld(self, comboKolorea):
-        db.pantailaKolEguneratu(Izena, comboKolorea.get())
+        hiztegia_kol = {
+            "horia": "yellow",
+            "zian": "cyan",
+            "urdina": "blue",
+            "laranja": "orange",
+            'berdea': "green",
+            'gorria': "red",
+            'morea': "purple",
+        }
+        print(comboKolorea.get())
+        db.pantailaKolEguneratu(Izena,hiztegia_kol[comboKolorea.get()])
         if db.kolBera(Izena, comboKolorea.get()):
             messagebox.showinfo(message="Kolore horrekin dago jada pamtaila", title="KoloreBera")
         self.apBueltatu()
