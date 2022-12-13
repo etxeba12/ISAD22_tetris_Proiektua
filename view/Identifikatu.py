@@ -15,6 +15,12 @@ class Identifikatu():
     def __init__(self):
         super(Identifikatu, self).__init__()
         db.taulaSortu()
+        db.musikaEguneratu('Iker','Tetris')
+        db.musikaEguneratu('Imanol', 'Tetris')
+        db.musikaEguneratu('eider', 'Tetris')
+        db.pantailaKolEguneratu('Iker', 'white')
+        db.pantailaKolEguneratu('Imanol', 'white')
+        db.pantailaKolEguneratu('eider', 'white')
         self.window = tk.Tk()
         self.window.geometry('300x300')
         self.window.configure(bg='white')
@@ -26,26 +32,26 @@ class Identifikatu():
             self.aukerenPantaila(Izena,Pasahitza)
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img)
+        panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
 
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  " )
 
-        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken",)
+        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken")
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",)
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken")
         izenaErabiltzaile.pack()
 
 
         pasahitza = tk.StringVar()
         pasahitza.set("          PASAHITZA          ")
 
-        pasahitzalabel = tk.Label(self.window, textvariable=pasahitza, borderwidth=3,relief="sunken",)
+        pasahitzalabel = tk.Label(self.window, textvariable=pasahitza, borderwidth=3,relief="sunken")
         pasahitzalabel.pack()
 
-        ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken",)
+        ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken")
         ErabiltzailePasahitza.pack()
 
         #botoia onartu

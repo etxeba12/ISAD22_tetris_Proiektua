@@ -12,12 +12,12 @@ class erabiltzaileaEzabatu():
         super(erabiltzaileaEzabatu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
-        self.window.geometry('300x300')
+        self.window.geometry('300x450')
         self.window.configure(bg='white')
         self.window.title("Ezabatu jokalari")
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img)
+        panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
 
         def datuakJaso():

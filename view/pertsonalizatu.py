@@ -1,83 +1,62 @@
 import tkinter as tk
-from tkinter import ttk
 from PIL import ImageTk, Image
-import model.datuBase as db
+import  view.PertsonalizazioAukera as per
 import view.aukerenPantaila as ap
 
 Izena = ""
 
-class pertsonalizatu():
+class Pertsonalizatu():
 
     def __init__(self):
-        super(pertsonalizatu, self).__init__()
-        db.taulaSortu()
+        super(Pertsonalizatu, self).__init__()
         self.window = tk.Tk()
         self.window.geometry('300x300')
         self.window.configure(bg='white')
-        self.window.title("Erabiltzailearen Pertsonalizazioa")
-
-        def datuakLortu():
-            forma = comboLaukiak.get()
-            kolorea = comboKoloreak.get()
-            self.pertsonalizazioGorde(forma,kolorea)
+        self.window.title(" Pertsonalizazio aukerak")
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img)
+        panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
 
-        #pieza mota aukeratu
-        laukia = tk.StringVar()
-        laukia.set("  LAUKI BAT AUKERATU  ")
+        per.Izena=Izena
 
-        laukialabel = tk.Label(self.window, textvariable=laukia, borderwidth=3, relief="sunken", )
-        laukialabel.pack()
+        # Adreilu aldatzeko botoia
+        adreiluaAldButton = tk.Button(self.window, text="ADREILU KOLOREA ALDATU",
+                                      command=self.piezaAukera)
+        adreiluaAldButton.pack()
+        # Adreilu aldatzeko botoia
 
-        comboLaukiak = ttk.Combobox(self.window, width=17, state="readonly" )
-        opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
-        comboLaukiak['values'] = opciones
-        comboLaukiak.pack()
-        #pieza mota aukeratu
+        # Pantaila aldatzeko botoia
+        pantailaAlButton = tk.Button(self.window, text="PANTAILA KOLOREA ALDATU",
+                                     command=self.pantailaAukera )
+        pantailaAlButton.pack()
+        # Pantaila aldatzeko botoia
 
-        #pieza kolorea aukeratu
-        kolorea = tk.StringVar()
-        kolorea.set("  KOLORE BAT AUKERATU  ")
+        # Musika aldatzeko botoia
+        musikaAldButton = tk.Button(self.window, text="      MUSIKA ALDATU      ", command=self.musikaAukera)
+        musikaAldButton.pack()
+        # Musika aldatzeko botoia
 
-        kolorelabel = tk.Label(self.window, textvariable=kolorea, borderwidth=3, relief="sunken", )
-        kolorelabel.pack()
-
-        comboKoloreak = ttk.Combobox(self.window, width=17,state="readonly")
-        opciones = ["yellow", "cyan", "blue", "orange", "green", "red", "purple"]
-        comboKoloreak['values'] = opciones
-        comboKoloreak.pack()
-        #pieza kolorea aukeratu
-
-        #atzeko kolorea aukeratu
-        atzekoKolorea = tk.StringVar()
-        atzekoKolorea.set("  KOLORE BAT AUKERATU  ")
-
-        atzekoKolorealabel = tk.Label(self.window, textvariable=atzekoKolorea, borderwidth=3, relief="sunken", )
-        atzekoKolorealabel.pack()
-
-        comboatzeko = ttk.Combobox(self.window, width=17, state="readonly")
-        opciones = ["red", "green", "blue", "yellow", "cyan", "black", "white"]
-        comboatzeko['values'] = opciones
-        comboatzeko.pack()
-        #atzeko kolorea aukeratu
-
-        #botoia gorde
-        buttonGorde = tk.Button(self.window, text="ONARTU",command=(datuakLortu))
-        buttonGorde.pack()
-
-        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=(self.bueltatu))
+        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
         buttonBueltatu.pack()
+
 
         self.window.mainloop()
 
-    def pertsonalizazioGorde(self,forma,kolorea):
-        print(forma,kolorea)
-        db.kolore_Pertsonalizatu(Izena,forma,kolorea)
+    def pantailaAukera(self):
         self.window.destroy()
-        ap.aukerenPantaila()
+        per.Aukera=1
+        per.PertsonalizazioAukera()
+
+    def piezaAukera(self):
+        self.window.destroy()
+        per.Aukera = 2
+        per.PertsonalizazioAukera()
+
+    def musikaAukera(self):
+        self.window.destroy()
+        per.Aukera = 3
+        per.PertsonalizazioAukera()
 
     def bueltatu(self):
         self.window.destroy()

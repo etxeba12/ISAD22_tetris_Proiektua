@@ -13,7 +13,7 @@ class pasahitzaBerreskuratu():
         super(pasahitzaBerreskuratu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
-        self.window.geometry('300x300')
+        self.window.geometry('300x400')
         self.window.configure(bg='white')
         self.window.title("Pasahitza Berreskuratu")
 
@@ -24,7 +24,7 @@ class pasahitzaBerreskuratu():
             self.datuakKonprobatu(izenaErabil,g1,g2)
 
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img)
+        panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
 
         # erabiltzaile izena
@@ -74,9 +74,9 @@ class pasahitzaBerreskuratu():
         self.window.mainloop()
 
     def datuakKonprobatu(self,izenaErabil,g1,g2):
-
         erantzun = db.pasahitzaBerreskuratu(izenaErabil)
         if erantzun is None:
+            messagebox.showinfo(message="Izen hori duen erabiltzailerik ez dago", title="BerreskuratuError")
             self.window.destroy()
             pasahitzaBerreskuratu()
         else:

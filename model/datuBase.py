@@ -6,7 +6,50 @@ cur = con.cursor()
 def taulaSortu():
     res = cur.execute("SELECT name FROM sqlite_master WHERE name='erabiltzaileak'")
     if(res.fetchone() is None):
-        cur.execute("CREATE TABLE erabiltzaileak(izena VARCHAR(50) PRIMARY KEY, pasahitza VARCHAR(50), puntuazioa INT(10),galdera1 VARCHAR(50),galdera2 VARCHAR(50))")
+        cur.execute("CREATE TABLE erabiltzaileak(izena VARCHAR(15) PRIMARY KEY, pasahitza VARCHAR(15), puntuazioa INT,"
+                    "galdera1 VARCHAR(7),galdera2 VARCHAR(15),gordeta ," #TODO: GORDETA ZEIN MOTAKOA?
+                    "puntupartida INT, abiadura INT, x int, y int, laukia VARCHAR(15), "
+                    "zutabea VARCHAR(15), lforma VARCHAR(15), lforma VARCHAR(15),zforma VARCHAR(15),"
+                    "tforma VARCHAR(15), admin BOOLEAN )")
+        #TODO: CREATE TABLE BUKATU EGITEN
+def insertZutabe():
+     cur.execute("ALTER TABLE erabiltzaileak ADD pantaila VARCHAR(15)")
+     cur.execute("ALTER TABLE erabiltzaileak ADD musika VARCHAR(15)")
+def pantailaKolEguneratu(izena, kol):
+    if not kolBera(izena, kol):
+        erag = f"UPDATE erabiltzaileak SET pantaila='{kol}' WHERE izena='{izena}'"
+        cur.execute(erag)
+        con.commit()
+def kolBera(izena, kol):
+    erag = f"SELECT pantaila FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    # Ez bada gorde (None) orduan ez da jarraitu aukerarik
+    return ema == kol
+
+def pantailaKolEman(izena):
+    erag = f"SELECT pantaila FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    return ema
+
+def musikaEguneratu(izena, mus):
+    if not musBera(izena, mus):
+        erag = f"UPDATE erabiltzaileak SET musika='{mus}' WHERE izena='{izena}'"
+        cur.execute(erag)
+        con.commit()
+def musBera(izena, mus):
+    erag = f"SELECT musika FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    # Ez bada gorde (None) orduan ez da jarraitu aukerarik
+    return ema == mus
+
+def musEman(izena):
+    erag = f"SELECT musika FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema = res.fetchone()
+    return ema
 
 def identifikatu(Izena,Pasahitza):
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=? AND pasahitza=?",(Izena,Pasahitza))
@@ -15,21 +58,41 @@ def identifikatu(Izena,Pasahitza):
     else:
         return True
 
-def erregistratu(Izena,Pasahitza,Galdera1,Galdera2):
+def admin_eg(izena):
+    if (izena == "Iker" or izena == "Miriam" or izena == "Imanol"):
+        erag=f"UPDATE erabiltzaileak SET admin=True WHERE izena='{izena}'"
+        cur.execute(erag)
+        con.commit()
+
+def erregistratu(izena,pasahitza,gald1,gald2):
     #erabiltzaile izena badago komprobatzen dugu
-    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?",[Izena])
+    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?",[izena])
+    badagoIzenBera=True
     if(res.fetchone() is None):
         #Erabiltzaile izena sartuta ez badago, sartzen dugu
-        cur.execute("INSERT INTO erabiltzaileak VALUES(?,?,0,?,?)",(Izena,Pasahitza,Galdera1,Galdera2))
+        erag = f"INSERT INTO erabiltzaileak (izena, pasahitza, puntuazioa, galdera1, galdera2, admin, pantaila, musika) " \
+               f"VALUES ('{izena}','{pasahitza}',0,'{gald1}','{gald2}', False, 'white', 'Tetris')"
+        cur.execute(erag)
         con.commit()
-        return False
-    else:
-        #bestela ez dugu sartzen
-        return True
-
+        admin_eg(izena)
+        badagoIzenBera= False
+    return badagoIzenBera
 def datuakLortu(Izena):
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?", [Izena])
     return res.fetchone()
+
+def jarraituPartida (izena):
+    erag=f"SELECT gordeta FROM erabiltzaileak WHERE izena='{izena}'"
+    res= cur.execute(erag)
+    ema=res.fetchone()
+    #Ez bada gorde (None) orduan ez da jarraitu aukerarik
+    return not( ema[0] is None)
+
+def admin_da(izena):
+    erag=f"SELECT admin FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema= res.fetchone()
+    return ema[0]
 
 def pasahitzaAldatu(izena,P1):
     res = cur.execute("UPDATE erabiltzaileak SET pasahitza=? WHERE izena=?",(P1,izena))
@@ -56,7 +119,6 @@ def partidaBerreskuratu(Izena):
     return res.fetchone()
 
 def kolorea_lortu(Izena):
-    print(Izena)
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?", [Izena])
     return res.fetchone()
 

@@ -8,6 +8,7 @@ class Tableroa():
 		self.tamaina = tamaina
 		self.hasieratu_tableroa()
 
+
 	def hasieratu_tableroa(self):
 		self.tab = [[ None for y in range(self.tamaina[0])]for x in range(self.tamaina[1])]
 		self.pieza = None
