@@ -77,7 +77,7 @@ class TableroaPanela(tk.Frame):
 		self.canvas = tk.Canvas(
 			width=self.tamaina[0]  * self.gelazka_tamaina+1,
 			height=self.tamaina[1] * self.gelazka_tamaina+1,
-			bg='#eee', borderwidth=0, highlightthickness=0
+			bg="#eee", borderwidth=0, highlightthickness=0
 		)
 		self.canvas.pack(expand=tk.YES, fill=None)
 
@@ -145,12 +145,11 @@ class TableroaPanela(tk.Frame):
 		self.after_cancel(self.jokatzen)
 		Gordetakopartida = [[ None for x in range(self.tamaina[0])]for y in range(self.tamaina[1])]
 		for i in range(self.tab.tamaina[1]):
-			print("i",i)
 			for t in range(self.tab.tamaina[0]):
-				print("t",t)
 				if (self.tab.tab[i][t] != None):
 					Gordetakopartida[i][t] = self.tab.tab[i][t]
 		serializatua = pickle.dumps(Gordetakopartida)
+		print(serializatua)
 		puntuazioapartida = self.tab.puntuazioa
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
 		JokatuLeioa.aukerenPantailaraJoan(self.master_)

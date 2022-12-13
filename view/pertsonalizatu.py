@@ -25,29 +25,44 @@ class pertsonalizatu():
         panel = tk.Label(self.window, image=img)
         panel.pack(side="top", fill="both", expand="no")
 
+        #pieza mota aukeratu
         laukia = tk.StringVar()
         laukia.set("  LAUKI BAT AUKERATU  ")
 
         laukialabel = tk.Label(self.window, textvariable=laukia, borderwidth=3, relief="sunken", )
         laukialabel.pack()
 
-        #combobox laukiak
-        comboLaukiak = ttk.Combobox(self.window, width=17)
+        comboLaukiak = ttk.Combobox(self.window, width=17, state="readonly" )
         opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
         comboLaukiak['values'] = opciones
         comboLaukiak.pack()
+        #pieza mota aukeratu
+
+        #pieza kolorea aukeratu
         kolorea = tk.StringVar()
         kolorea.set("  KOLORE BAT AUKERATU  ")
 
         kolorelabel = tk.Label(self.window, textvariable=kolorea, borderwidth=3, relief="sunken", )
         kolorelabel.pack()
 
-        #combobox Koloreak
-        comboKoloreak = ttk.Combobox(self.window, width=17)
+        comboKoloreak = ttk.Combobox(self.window, width=17,state="readonly")
         opciones = ["yellow", "cyan", "blue", "orange", "green", "red", "purple"]
         comboKoloreak['values'] = opciones
         comboKoloreak.pack()
+        #pieza kolorea aukeratu
 
+        #atzeko kolorea aukeratu
+        atzekoKolorea = tk.StringVar()
+        atzekoKolorea.set("  KOLORE BAT AUKERATU  ")
+
+        atzekoKolorealabel = tk.Label(self.window, textvariable=atzekoKolorea, borderwidth=3, relief="sunken", )
+        atzekoKolorealabel.pack()
+
+        comboatzeko = ttk.Combobox(self.window, width=17, state="readonly")
+        opciones = ["red", "green", "blue", "yellow", "cyan", "black", "white"]
+        comboatzeko['values'] = opciones
+        comboatzeko.pack()
+        #atzeko kolorea aukeratu
 
         #botoia gorde
         buttonGorde = tk.Button(self.window, text="ONARTU",command=(datuakLortu))
