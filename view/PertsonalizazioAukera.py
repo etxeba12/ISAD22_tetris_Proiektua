@@ -52,7 +52,7 @@ class PertsonalizazioAukera():
         laukialabel.pack()
 
         #combobox laukiak
-        comboLaukiak = ttk.Combobox(self.window, width=17)
+        comboLaukiak = ttk.Combobox(self.window, width=17,state="readonly")
         opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
         comboLaukiak['values'] = opciones
         comboLaukiak.pack()
@@ -74,10 +74,7 @@ class PertsonalizazioAukera():
         kolorelabel.pack()
 
         # combobox Koloreak
-        comboKoloreak = ttk.Combobox(self.window, width=17)
-     #   opciones = ["yellow", "cyan", "blue", "orange", "green", "red", "purple"]
-        #comboKoloreak['values'] = opciones
-       # comboKoloreak.pack()
+        comboKoloreak = ttk.Combobox(self.window, width=17,state="readonly")
         opcionesEus=['horia','zian','urdina','laranja','berdea','gorria','morea']
         comboKoloreak['values'] = opcionesEus
         comboKoloreak.pack()
@@ -116,7 +113,7 @@ class PertsonalizazioAukera():
         musikalabel.pack()
 
         # combobox Koloreak
-        comboMusikak = ttk.Combobox(self.window, width=17)
+        comboMusikak = ttk.Combobox(self.window, width=17,state="readonly")
         opciones = ["Help", "LaFlaca", "Tetris", "Thunderstruck"]
         comboMusikak['values'] = opciones
         comboMusikak.pack()

@@ -8,6 +8,7 @@ import view.JokatuLeioa as jl
 import view.Identifikatu as Id
 import view.Pertsonalizatu as pp
 import model.Piezak as pi
+import view.rankingIkusi as ri
 
 Izena = " "
 listaDatuak = ""
@@ -70,6 +71,11 @@ class aukerenPantaila():
         buttonMaila.pack()
         # maila aukeratu
 
+        # raking aukeratu
+        rankingIkusi = tk.Button(self.window, text="   RANKING   ", command=(self.rankingIkusi))
+        rankingIkusi.pack()
+        # raking aukeratu
+
         # botoia partida jarraitu
         if  (db.jarraituPartida(Izena)):
             buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
@@ -112,6 +118,9 @@ class aukerenPantaila():
             messagebox.showinfo(message="Ez duzu hau egiteko baimena", title="BaimenikEz")
             self.window.destroy()
             aukerenPantaila()
+    def rankingIkusi(self):
+        self.window.destroy()
+        ri.rankingIkusi("absolutua")
 
     def jokatuleioa(self,Maila):
         jl.partidaJarraitu=False

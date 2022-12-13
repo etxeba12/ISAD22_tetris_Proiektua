@@ -64,6 +64,7 @@ def admin_eg(izena):
         cur.execute(erag)
         con.commit()
 
+
 def erregistratu(izena,pasahitza,gald1,gald2):
     #erabiltzaile izena badago komprobatzen dugu
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?",[izena])
@@ -101,6 +102,13 @@ def pasahitzaAldatu(izena,P1):
 def erabiltzaileGuztiakLortu():
     res = cur.execute("SELECT izena,puntuazioa FROM erabiltzaileak")
     return res.fetchall()
+
+def erabiltzaileMailakaLortu(maila):
+    print(maila)
+    res = cur.execute(f"SELECT izena,{maila} FROM erabiltzaileak")
+    return res.fetchall()
+
+
 
 def erabiltzaileEzabatu(Izena):
     res = cur.execute("DELETE FROM erabiltzaileak WHERE izena=?",[Izena])
