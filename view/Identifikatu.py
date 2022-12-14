@@ -14,15 +14,8 @@ class Identifikatu():
 
     def __init__(self):
         super(Identifikatu, self).__init__()
-        db.taulaSortu()
-        db.musikaEguneratu('Iker','Tetris')
-        db.musikaEguneratu('Imanol', 'Tetris')
-        db.musikaEguneratu('eider', 'Tetris')
-        db.pantailaKolEguneratu('Iker', 'white')
-        db.pantailaKolEguneratu('Imanol', 'white')
-        db.pantailaKolEguneratu('eider', 'white')
         self.window = tk.Tk()
-        self.window.geometry('340x340')
+        self.window.geometry('340x400')
         self.window.configure(bg='white')
         self.window.title("Erabiltzailearen identifikazioa")
 
@@ -31,10 +24,12 @@ class Identifikatu():
             Pasahitza = ErabiltzailePasahitza.get()
             self.aukerenPantaila(Izena,Pasahitza)
 
+        #Logoa jarri
         self.img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         self.panel = tk.Label(self.window, image=self.img, bg='white')
         self.panel.pack(side="top", fill="both", expand="no")
 
+        #Identifikatzeko datuak jarri
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  " )
 
@@ -57,24 +52,23 @@ class Identifikatu():
         #botoia onartu
         button = tk.Button(self.window, text="ONARTU",command=(datuakJaso),width=25,height=2)
         button.pack()
-        #botoia onartu
 
         #etiketa erregistroa
         erregistroEtiqueta = tk.Label(self.window, text='ez zaude erregistratua?',width=25,height=2)
         erregistroEtiqueta.pack()
         erregistroEtiqueta.bind('<Button-1>', self.erregistroPantaila)
-        #etiketa erregistroa
 
         # etiketa pasahitza berreskuratu
         pasahitzaEtiqueta = tk.Label(self.window, text='pasahitza ahaztu duzu?',width=25,height=2)
         pasahitzaEtiqueta.pack()
         pasahitzaEtiqueta.bind('<Button-1>', self.berreskuratu)
-        # etiketa pasahitza berreskuratu
 
         self.window.mainloop()
 
 
     def aukerenPantaila(self,Izena,Pasahitza):
+        # Izena eta Pasahitza zuzenak badira, aukerenPantaila lehioa zabalduko da, hau itxiz
+        # bestela, errore mezua eta berriz saiatu
         ondo = db.identifikatu(Izena,Pasahitza)
         ap.Izena = Izena
         pa.Izena = Izena
@@ -87,10 +81,12 @@ class Identifikatu():
             Identifikatu()
 
     def erregistroPantaila(self,arg):
+        # Erabiltzaile bat erregistratzeko lehioa zabaltzen du, hau itxiz.
         self.window.destroy()
         ep.ErregistroPantaila()
 
     def berreskuratu(self,arg):
+        # Erabiltzaile bat pasahitza aldatzeko aukera ematen dion lehioa zabaltzen du, hau itxiz.
         self.window.destroy()
         pb.pasahitzaBerreskuratu()
 

@@ -14,7 +14,7 @@ class ErregistroPantaila():
     def __init__(self):
         super(ErregistroPantaila, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('300x440')
+        self.window.geometry('300x540')
         self.window.configure(bg='white')
         self.window.title("Erregistro pantaila")
 
@@ -37,7 +37,7 @@ class ErregistroPantaila():
         izenalabel.pack()
 
         izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,
-                                     borderwidth=3, relief="sunken",width=29 )
+                                     borderwidth=3, relief="sunken",width=25 )
         izenaErabiltzaile.pack()
         #izena
 
@@ -49,7 +49,7 @@ class ErregistroPantaila():
         pasahitzalabel.pack()
 
         ErabiltzailePasahitza = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,
-                                         show='*', borderwidth=3, relief="sunken", width=29)
+                                         show='*', borderwidth=3, relief="sunken", width=25)
         ErabiltzailePasahitza.pack()
         #pasahitza
 
@@ -61,7 +61,7 @@ class ErregistroPantaila():
         galdera1label.pack()
 
         galdera1erantzun = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,
-                                     borderwidth=3, relief="sunken", width=29)
+                                     borderwidth=3, relief="sunken", width=25)
         galdera1erantzun.pack()
         #galdera 1 testua
 
@@ -73,7 +73,7 @@ class ErregistroPantaila():
         galdera2label.pack()
 
         galdera2erantzun = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,
-                                    borderwidth=3, relief="sunken",width=29 )
+                                    borderwidth=3, relief="sunken",width=25)
         galdera2erantzun.pack()
         #galdera 2 testua
 
