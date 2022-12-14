@@ -26,7 +26,11 @@ class rankingIkusi():
             zer = db.erabiltzaileMailakaLortu(maila)
         zerOrdenatu = sorted(zer, key=lambda zer: zer[1],reverse=True)
         i = 0
-        while i < 5:
+        if(len(zerOrdenatu)< 5):
+            luzera = len(zerOrdenatu)
+        else:
+            luzera = 5
+        while i < luzera:
             bat = tk.StringVar()
             bat.set("  ERABILTZAILE IZENA  ")
 

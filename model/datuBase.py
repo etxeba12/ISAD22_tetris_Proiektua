@@ -150,12 +150,10 @@ def kolore_Pertsonalizatu(Izena,forma,kolorea):
 def puntuazioGordeMailaka(Izena,puntuazioa,maila):
     puntuTotal = cur.execute("SELECT puntuazioa FROM erabiltzaileak WHERE izena=?", [Izena])
     ema1 = puntuTotal.fetchone()
-    print("ema1",ema1[0])
     puntuTotala = ema1[0] + puntuazioa
     mailaOna = "maila" + str(maila)
     puntuMaila = cur.execute(f"SELECT {mailaOna} FROM erabiltzaileak WHERE izena=?", [Izena])
     ema2 = puntuMaila.fetchone()
-    print("ema2",ema2[0])
     puntuMail = ema2[0] + puntuazioa
     res = cur.execute(f"UPDATE erabiltzaileak SET {mailaOna}=?,puntuazioa=? WHERE izena=?",
                       (puntuMail,puntuTotala,Izena))

@@ -31,10 +31,10 @@ class pasahitzaBerreskuratu():
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  ")
 
-        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken",)
+        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken",width=25,height=2)
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken")
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",width=29)
         izenaErabiltzaile.pack()
         # erabiltzaile izena
 
@@ -42,31 +42,31 @@ class pasahitzaBerreskuratu():
         galdera1 = tk.StringVar()
         galdera1.set("     ZEIN DA ZURE NAN ZENBAKIA?     ")
 
-        galdera1label = tk.Label(self.window, textvariable=galdera1, borderwidth=3,relief="sunken",)
+        galdera1label = tk.Label(self.window, textvariable=galdera1, borderwidth=3,relief="sunken",width=25,height=2)
         galdera1label.pack()
 
-        Erabiltzaileerantzun1 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3,relief="sunken")
+        Erabiltzaileerantzun1 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3,relief="sunken",width=29)
         Erabiltzaileerantzun1.pack()
         # 1.galdera
 
         # 2.galdera
         galdera2 = tk.StringVar()
-        galdera2.set("ZEIN DA ZURE LEHEN MASKOTAREN IZENA?")
+        galdera2.set("LEHEN MASKOTAREN IZENA?")
 
-        galdera2label = tk.Label(self.window, textvariable=galdera2, borderwidth=3, relief="sunken", )
+        galdera2label = tk.Label(self.window, textvariable=galdera2, borderwidth=3, relief="sunken",width=25,height=2 )
         galdera2label.pack()
 
-        Erabiltzaileerantzun2 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken" )
+        Erabiltzaileerantzun2 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",width=29)
         Erabiltzaileerantzun2.pack()
         # 2.galdera
 
         #botoia onartu
-        button = tk.Button(self.window, text="BERRESKURATU",command=(datuakJaso))
+        button = tk.Button(self.window, text="BERRESKURATU",command=(datuakJaso),width=25,height=2)
         button.pack()
         #botoia onartu
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=25,height=2)
         button.pack()
         # botoia atzera bueltatu
 

@@ -49,11 +49,11 @@ class PertsonalizazioAukera():
         laukia = tk.StringVar()
         laukia.set("  LAUKI BAT AUKERATU  ")
 
-        laukialabel = tk.Label(self.window, textvariable=laukia, borderwidth=3, relief="sunken", )
+        laukialabel = tk.Label(self.window, textvariable=laukia, borderwidth=3, relief="sunken",width=25,height=2 )
         laukialabel.pack()
 
         #combobox laukiak
-        comboLaukiak = ttk.Combobox(self.window, width=17,state="readonly")
+        comboLaukiak = ttk.Combobox(self.window, width=26,state="readonly")
         opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
         comboLaukiak['values'] = opciones
         comboLaukiak.current(0)
@@ -61,10 +61,10 @@ class PertsonalizazioAukera():
 
         #botoia gorde
 
-        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda:self.pertsonalizazioGorde(comboLaukiak,comboKoloreak))
+        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda:self.pertsonalizazioGorde(comboLaukiak,comboKoloreak),width=25,height=2)
         buttonGorde.pack()
 
-        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
+        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
         buttonBueltatu.pack()
 
 
@@ -72,11 +72,11 @@ class PertsonalizazioAukera():
         kolorea = tk.StringVar()
         kolorea.set("  KOLORE BAT AUKERATU  ")
 
-        kolorelabel = tk.Label(self.window, textvariable=kolorea, borderwidth=3, relief="sunken", )
+        kolorelabel = tk.Label(self.window, textvariable=kolorea, borderwidth=3, relief="sunken",width=25,height=2 )
         kolorelabel.pack()
 
         # combobox Koloreak
-        comboKoloreak = ttk.Combobox(self.window, width=17,state="readonly")
+        comboKoloreak = ttk.Combobox(self.window, width=26,state="readonly")
         opcionesEus=['horia','zian','urdina','laranja','berdea','gorria','morea','zuria']
         comboKoloreak['values'] = opcionesEus
         comboKoloreak.pack()
@@ -95,10 +95,10 @@ class PertsonalizazioAukera():
             ema = hiztegia_kol.get(str(kolor[0]))
             comboKoloreak.current(opcionesEus.index(str(ema)))
             # botoia gorde
-            buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak) )
+            buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak),width=25,height=2 )
             buttonGorde.pack()
 
-            buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
+            buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
             buttonBueltatu.pack()
 
         else:
@@ -126,11 +126,11 @@ class PertsonalizazioAukera():
         musika = tk.StringVar()
         musika.set("  MUSIKA BAT AUKERATU  ")
 
-        musikalabel = tk.Label(self.window, textvariable=musika, borderwidth=3, relief="sunken", )
+        musikalabel = tk.Label(self.window, textvariable=musika, borderwidth=3, relief="sunken",width=25,height=2 )
         musikalabel.pack()
 
         # combobox Koloreak
-        comboMusikak = ttk.Combobox(self.window, width=17,state="readonly")
+        comboMusikak = ttk.Combobox(self.window, width=26,state="readonly")
         opciones = ["Help", "LaFlaca", "Tetris", "Thunderstruck"]
         comboMusikak['values'] = opciones
         musi = db.musEman(Izena)
@@ -138,10 +138,10 @@ class PertsonalizazioAukera():
         comboMusikak.pack()
 
          # botoia gorde
-        buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.musikaAldatu(comboMusikak) )
+        buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.musikaAldatu(comboMusikak),width=25,height=2 )
         buttonGorde.pack()
 
-        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
+        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
         buttonBueltatu.pack()
 
 

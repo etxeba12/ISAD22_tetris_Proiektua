@@ -29,30 +29,30 @@ class erabiltzaileaEzabatu():
             bat = tk.StringVar()
             bat.set("  ERABILTZAILE IZENA  ")
 
-            Infolabel = tk.Label(self.window, textvariable=tk.StringVar(value=str(i[0]) + " → Puntuazioa: " + str(i[1])), borderwidth=3, relief="sunken", )
+            Infolabel = tk.Label(self.window, textvariable=tk.StringVar(value=str(i[0]) + " → Puntuazioa: " + str(i[1])), borderwidth=3, relief="sunken",width=25,height=2 )
             Infolabel.pack()
 
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  ")
 
-        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", )
+        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", width=25,height=2)
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken", )
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken", width=29)
         izenaErabiltzaile.pack()
 
         # botoia ezabatu
-        button = tk.Button(self.window, text="EZABATU", command=(datuakJaso))
+        button = tk.Button(self.window, text="EZABATU", command=(datuakJaso),width=25,height=2)
         button.pack()
         # botoia ezabatu
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=25,height=2)
         button.pack()
         # botoia atzera bueltatu
 
     def ezabatuErabil(self,Izena):
-        if(Izena != "iker"):
+        if(Izena != "Iker" and Izena != "Miriam" and Izena != "Imanol"):
             db.erabiltzaileEzabatu(Izena)
         else:
             messagebox.showinfo(message="erabiltzaile hau ezin da ezabatu", title="errorea")

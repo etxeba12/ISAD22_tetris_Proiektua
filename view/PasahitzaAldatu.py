@@ -22,7 +22,7 @@ class PasahitzaAldatu():
             if len(Pasahitza2)==0 or len(Pasahitza1)==0 :
                 messagebox.showinfo(message="Pasahitza hau ez du balio", title="PasahitzaError")
                 self.window.destroy()
-                PasahitzaAldatu()
+                PasahitzaAldatu(False)
             else:
                 self.PasahitzaSartu(Pasahitza1, Pasahitza2)
 
@@ -34,10 +34,10 @@ class PasahitzaAldatu():
         pasahitza = tk.StringVar()
         pasahitza.set("    PASAHITZA SARTU    ")
 
-        pasahitzalabel = tk.Label(self.window, textvariable=pasahitza, borderwidth=3,relief="sunken",)
+        pasahitzalabel = tk.Label(self.window, textvariable=pasahitza, borderwidth=3,relief="sunken",width=25,height=2)
         pasahitzalabel.pack()
 
-        pasahitzaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3, relief="sunken",)
+        pasahitzaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3, relief="sunken",width=29)
         pasahitzaErabiltzaile.pack()
         # pasahitza lehenengo aldia
 
@@ -45,19 +45,19 @@ class PasahitzaAldatu():
         pasahitza2 = tk.StringVar()
         pasahitza2.set(" BERRIRO ERREPIKATU ")
 
-        pasahitza2label = tk.Label(self.window, textvariable=pasahitza2, borderwidth=3,relief="sunken",)
+        pasahitza2label = tk.Label(self.window, textvariable=pasahitza2, borderwidth=3,relief="sunken",width=25,height=2)
         pasahitza2label.pack()
 
-        ErabiltzailePasahitza2 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken",)
+        ErabiltzailePasahitza2 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL,show='*', borderwidth=3,relief="sunken",width=29)
         ErabiltzailePasahitza2.pack()
 
         #botoia ALDATU
-        button = tk.Button(self.window, text="ALDATU",command=(datuakJaso))
+        button = tk.Button(self.window, text="ALDATU",command=(datuakJaso),width=25,height=2)
         button.pack()
         #botoia ALDATU
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(lambda: self.atzerabueltatu(BerreskuratutikEtorri)))
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(lambda: self.atzerabueltatu(BerreskuratutikEtorri)),width=25,height=2)
         button.pack()
         # botoia atzera bueltatu
 

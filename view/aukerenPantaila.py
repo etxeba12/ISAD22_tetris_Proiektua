@@ -39,10 +39,10 @@ class aukerenPantaila():
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  ")
 
-        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken")
+        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken",width=25,height=2)
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(value=listaDatuak[0]), state=tk.DISABLED,borderwidth=3, relief="sunken", )
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(value=listaDatuak[0]), state=tk.DISABLED,borderwidth=3, relief="sunken", width=29, )
         izenaErabiltzaile.pack()
         #izena
 
@@ -50,10 +50,10 @@ class aukerenPantaila():
         puntuazioa = tk.StringVar()
         puntuazioa.set("        PUNTUAZIOA        ")
 
-        puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa, borderwidth=3, relief="sunken" )
+        puntuazioalabel = tk.Label(self.window, textvariable=puntuazioa, borderwidth=3, relief="sunken",width=25,height=2 )
         puntuazioalabel.pack()
 
-        puntuazioErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(value=listaDatuak[2]), state=tk.DISABLED,borderwidth=3, relief="sunken", )
+        puntuazioErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(value=listaDatuak[2]), state=tk.DISABLED,borderwidth=3, relief="sunken", width=29, )
         puntuazioErabiltzaile.pack()
         #Puntuazioa
 
@@ -61,45 +61,45 @@ class aukerenPantaila():
         aukeratumaila = tk.StringVar()
         aukeratumaila.set("    MAILA AUKERATU    ")
 
-        aukeratumailalabel = tk.Label(self.window, textvariable=aukeratumaila, borderwidth=3, relief="sunken")
+        aukeratumailalabel = tk.Label(self.window, textvariable=aukeratumaila, borderwidth=3, relief="sunken",width=25,height=2)
         aukeratumailalabel.pack()
 
-        maila = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(),state=tk.NORMAL, borderwidth=3, relief="sunken", )
+        maila = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(),state=tk.NORMAL, borderwidth=3, relief="sunken", width=29, )
         maila.pack()
 
-        buttonMaila = tk.Button(self.window, text="   MAILA AUKERATU   ", command=(datuakJaso))
+        buttonMaila = tk.Button(self.window, text="   MAILA AUKERATU   ", command=(datuakJaso),width=25,height=2)
         buttonMaila.pack()
         # maila aukeratu
 
         # raking aukeratu
-        rankingIkusi = tk.Button(self.window, text="   RANKING   ", command=(self.rankingIkusi))
+        rankingIkusi = tk.Button(self.window, text="   RANKING   ", command=(self.rankingIkusi),width=25,height=2)
         rankingIkusi.pack()
         # raking aukeratu
 
         # botoia partida jarraitu
         if  (db.jarraituPartida(Izena)):
-            buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu))
+            buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu),width=25,height=2)
             buttonJarraituPa.pack()
         # botoia partida jarraitu
 
         #botoia pertsonalizatu
-        buttonPertsonalizatu = tk.Button(self.window, text=" PERTSONALIZATU ", command=(self.pertsonalizatu))
+        buttonPertsonalizatu = tk.Button(self.window, text=" PERTSONALIZATU ", command=(self.pertsonalizatu),width=25,height=2)
         buttonPertsonalizatu.pack()
         #botoia pertsonalizatu
 
         # botoia pasahitza
-        buttonPasahitza = tk.Button(self.window, text=" PASAHITZA ALDATU ", command=(self.PasahitzaLehioa))
+        buttonPasahitza = tk.Button(self.window, text=" PASAHITZA ALDATU ", command=(self.PasahitzaLehioa),width=25,height=2)
         buttonPasahitza.pack()
         # botoia pasahitza
 
         # botoia admin
         if (db.admin_da(Izena)):
-            buttonAdmin = tk.Button(self.window, text=" EZABATU JOKALARI ", command=(self.ErabiltzaileEzabatu))
+            buttonAdmin = tk.Button(self.window, text=" EZABATU JOKALARI ", command=(self.ErabiltzaileEzabatu),width=25,height=2)
             buttonAdmin.pack()
         # botoia admin
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu))
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=25,height=2)
         button.pack()
         # botoia atzera bueltatu
 
@@ -131,10 +131,10 @@ class aukerenPantaila():
         if(Maila == "1" or Maila == "2" or Maila == "3"):
             jl.Maila = Maila
             if(Maila == "1"):
-                tamaina = [20,40]
+                tamaina = [20,25]
                 abiadura = int(400)
             elif(Maila == "2"):
-                tamaina = [15, 30]
+                tamaina = [14, 22]
                 abiadura = int(300)
             elif(Maila == "3"):
                 tamaina = [10, 20]
