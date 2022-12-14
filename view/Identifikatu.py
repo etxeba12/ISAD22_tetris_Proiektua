@@ -31,9 +31,9 @@ class Identifikatu():
             Pasahitza = ErabiltzailePasahitza.get()
             self.aukerenPantaila(Izena,Pasahitza)
 
-        img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img, bg='white')
-        panel.pack(side="top", fill="both", expand="no")
+        self.img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
+        self.panel = tk.Label(self.window, image=self.img, bg='white')
+        self.panel.pack(side="top", fill="both", expand="no")
 
         izena = tk.StringVar()
         izena.set("  ERABILTZAILE IZENA  " )
