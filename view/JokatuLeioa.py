@@ -10,6 +10,7 @@ from playsound import playsound
 from pygame import mixer
 
 Izena = " "
+Maila = " "
 puntuazioa = " "
 partidaJarraitu = False
 tablerogordeta = []
@@ -172,11 +173,10 @@ class TableroaPanela(tk.Frame):
 		self.after_cancel(self.jokatzen)
 		Gordetakopartida = [[ None for x in range(self.tamaina[0])]for y in range(self.tamaina[1])]
 		for i in range(self.tab.tamaina[1]):
-			print("i",i)
 			for t in range(self.tab.tamaina[0]):
-				print("t",t)
 				if (self.tab.tab[i][t] != None):
 					Gordetakopartida[i][t] = self.tab.tab[i][t]
+		db.puntuazioGordeMailaka(Izena,self.tab.puntuazioa,Maila)
 		serializatua = pickle.dumps(Gordetakopartida)
 		puntuazioapartida = self.tab.puntuazioa
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])

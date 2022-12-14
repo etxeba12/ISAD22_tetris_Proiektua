@@ -129,6 +129,7 @@ class aukerenPantaila():
         jl.Kolorea= db.pantailaKolEman(Izena)
         jl.Musika=db.musEman(Izena)
         if(Maila == "1" or Maila == "2" or Maila == "3"):
+            jl.Maila = Maila
             if(Maila == "1"):
                 tamaina = [20,40]
                 abiadura = int(400)
@@ -158,4 +159,5 @@ class aukerenPantaila():
 
     def pertsonalizatu(self):
         self.window.destroy()
+        pp.Izena = Izena
         pp.Pertsonalizatu()

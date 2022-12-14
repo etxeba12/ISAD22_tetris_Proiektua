@@ -39,6 +39,7 @@ class PertsonalizazioAukera():
             'berdea': "green",
             'gorria': "red",
             'morea': "purple",
+            'zuria':"white",
         }
         kolorea = hiztegia_kol[comboKoloreak.get()]
         db.kolore_Pertsonalizatu(Izena, forma, kolorea)
@@ -55,6 +56,7 @@ class PertsonalizazioAukera():
         comboLaukiak = ttk.Combobox(self.window, width=17,state="readonly")
         opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
         comboLaukiak['values'] = opciones
+        comboLaukiak.current(0)
         comboLaukiak.pack()
 
         #botoia gorde
@@ -75,10 +77,23 @@ class PertsonalizazioAukera():
 
         # combobox Koloreak
         comboKoloreak = ttk.Combobox(self.window, width=17,state="readonly")
-        opcionesEus=['horia','zian','urdina','laranja','berdea','gorria','morea']
+        opcionesEus=['horia','zian','urdina','laranja','berdea','gorria','morea','zuria']
         comboKoloreak['values'] = opcionesEus
         comboKoloreak.pack()
+        hiztegia_kol = {
+            "yellow": "horia",
+            "cyan": "zian",
+            "blue": "urdina",
+            "orange": "laranja",
+            'green': "berdea",
+            'red': "gorria",
+            'purple': "morea",
+            'white':"zuria",
+        }
         if pantaila:
+            kolor = db.pantailaKolEman(Izena)
+            ema = hiztegia_kol.get(str(kolor[0]))
+            comboKoloreak.current(opcionesEus.index(str(ema)))
             # botoia gorde
             buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak) )
             buttonGorde.pack()
@@ -87,6 +102,7 @@ class PertsonalizazioAukera():
             buttonBueltatu.pack()
 
         else:
+            comboKoloreak.current(0)
             self.adreiluAldatu(comboKoloreak)
 
     def pantailaKolAld(self, comboKolorea):
@@ -98,6 +114,7 @@ class PertsonalizazioAukera():
             'berdea': "green",
             'gorria': "red",
             'morea': "purple",
+            'zuria':"white",
         }
         print(comboKolorea.get())
         db.pantailaKolEguneratu(Izena,hiztegia_kol[comboKolorea.get()])
@@ -116,6 +133,8 @@ class PertsonalizazioAukera():
         comboMusikak = ttk.Combobox(self.window, width=17,state="readonly")
         opciones = ["Help", "LaFlaca", "Tetris", "Thunderstruck"]
         comboMusikak['values'] = opciones
+        musi = db.musEman(Izena)
+        comboMusikak.current(opciones.index(str(musi[0])))
         comboMusikak.pack()
 
          # botoia gorde

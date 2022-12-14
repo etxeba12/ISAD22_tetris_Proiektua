@@ -31,7 +31,7 @@ class rankingIkusi():
             bat.set("  ERABILTZAILE IZENA  ")
 
             Infolabel = tk.Label(self.window, textvariable=tk.StringVar(value=str(zerOrdenatu[i][0]) + " → Puntuazioa: " + str(zerOrdenatu[i][1])), borderwidth=3, relief="sunken", width=25,height=2)
-            Infolabel.pack(pady=5)
+            Infolabel.pack(pady=2)
             i = i + 1
 
         rankingaukeratu = tk.StringVar()
@@ -44,6 +44,7 @@ class rankingIkusi():
         comboranking = ttk.Combobox(self.window, width=17, state="readonly")
         opciones = ["maila1", "maila2" ,"maila3", "absolutua"]
         comboranking['values'] = opciones
+        comboranking.current(3)
         comboranking.pack()
 
         buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda: self.rankingEguneratu(comboranking))
