@@ -102,8 +102,6 @@ def jarraituPartida (izena):
     #Ez bada gorde (None) orduan ez da jarraitu aukerarik
     return not( ema[0] is None)
 
-
-
 def pasahitzaAldatu(izena,P1):
     res = cur.execute("UPDATE erabiltzaileak SET pasahitza=? WHERE izena=?",(P1,izena))
     con.commit()
