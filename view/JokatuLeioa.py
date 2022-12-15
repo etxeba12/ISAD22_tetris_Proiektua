@@ -1,12 +1,10 @@
 import random
-import multiprocessing
 import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
 import model.datuBase as db
 import view.aukerenPantaila as ap
 import pickle
-from playsound import playsound
 from pygame import mixer
 
 Izena = " "
