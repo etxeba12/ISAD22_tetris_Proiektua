@@ -14,6 +14,7 @@ Maila = " "
 puntuazioa = " "
 partidaJarraitu = False
 tablerogordeta = []
+bostenMultiploak = [5, 15, 25, 35,45]  # jarraian 5 partida (5000 puntu irabazteagatik) pasatzeagatik, premio hobea
 Kolorea = " "
 
 
@@ -138,6 +139,12 @@ class TableroaPanela(tk.Frame):
 		try:
 			self.tab.betetako_lerroak_ezabatu()
 			self.tab.mugitu_behera()
+			partidaIrabaziak = self.tab.puntuazioa // 100  # 1000 puntu heltzerakoan, partida bat irabazten duzula suposatu dugu
+			print(partidaIrabaziak)
+			print(partidaIrabaziak in bostenMultiploak)
+			if (partidaIrabaziak in bostenMultiploak):
+				bostenMultiploak.pop(0)
+				db.sariaSartu(Izena, "Handiak")
 		except Exception as error:
 			try:
 				self.tab.pieza_finkotu(self.tab.posizioa)

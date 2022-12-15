@@ -158,3 +158,13 @@ def puntuazioGordeMailaka(Izena,puntuazioa,maila):
     res = cur.execute(f"UPDATE erabiltzaileak SET {mailaOna}=?,puntuazioa=? WHERE izena=?",
                       (puntuMail,puntuTotala,Izena))
     con.commit()
+
+def sariaSartu(Izena,saria):
+    sari = "sari" + str(saria)
+    print(sari)
+    sariKantitate= cur.execute(f"SELECT {sari} FROM erabiltzaileak WHERE izena=?", [Izena])
+    ema1 = sariKantitate.fetchone()
+    sariBerri = ema1[0] + 1
+    res = cur.execute(f"UPDATE erabiltzaileak SET {sari}=? WHERE izena=?",
+                      (sariBerri,Izena))
+    con.commit()
