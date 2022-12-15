@@ -14,7 +14,6 @@ class Identifikatu():
 
     def __init__(self):
         super(Identifikatu, self).__init__()
-        db.taulaSortu()
         self.window = tk.Tk()
         self.window.geometry('300x400')
         self.window.configure(bg='white')
