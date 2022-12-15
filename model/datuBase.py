@@ -105,7 +105,7 @@ def erabiltzaileGuztiakLortu():
 
 def erabiltzaileMailakaLortu(maila):
     print(maila)
-    res = cur.execute(f"SELECT izena,{maila} FROM erabiltzaileak")
+    res = cur.execute(f"SELECT erabiltzaileIzena,puntuazioa FROM partidaDatuak WHERE maila=?",[maila])
     return res.fetchall()
 
 
@@ -148,15 +148,12 @@ def kolore_Pertsonalizatu(Izena,forma,kolorea):
     con.commit()
 
 def puntuazioGordeMailaka(Izena,puntuazioa,maila):
-    puntuTotal = cur.execute("SELECT puntuazioa FROM erabiltzaileak WHERE izena=?", [Izena])
-    ema1 = puntuTotal.fetchone()
-    puntuTotala = ema1[0] + puntuazioa
-    mailaOna = "maila" + str(maila)
-    puntuMaila = cur.execute(f"SELECT {mailaOna} FROM erabiltzaileak WHERE izena=?", [Izena])
-    ema2 = puntuMaila.fetchone()
-    puntuMail = ema2[0] + puntuazioa
-    res = cur.execute(f"UPDATE erabiltzaileak SET {mailaOna}=?,puntuazioa=? WHERE izena=?",
-                      (puntuMail,puntuTotala,Izena))
+    erag = f"INSERT INTO partidaDatuak (erabiltzaileIzena,maila,puntuazioa) VALUES ('{Izena}','{maila}','{puntuazioa}')"
+    cur.execute(erag)
+    puntu = cur.execute("SELECT puntuazioa FROM erabiltzaileak WHERE izena=?", [Izena])
+    puntuazio = puntu.fetchone()
+    puntuak = puntuazio[0] + puntuazioa
+    res = cur.execute(f"UPDATE erabiltzaileak SET puntuazioa=? WHERE izena=?",(puntuak, Izena))
     con.commit()
 
 def sariaSartu(Izena,saria):

@@ -24,6 +24,7 @@ class rankingIkusi():
             zer = db.erabiltzaileGuztiakLortu()
         else:
             zer = db.erabiltzaileMailakaLortu(maila)
+            print(zer)
         zerOrdenatu = sorted(zer, key=lambda zer: zer[1],reverse=True)
         i = 0
         if(len(zerOrdenatu)< 5):
@@ -46,7 +47,7 @@ class rankingIkusi():
 
         # combobox ranking
         comboranking = ttk.Combobox(self.window, width=17, state="readonly")
-        opciones = ["maila1", "maila2" ,"maila3", "absolutua"]
+        opciones = ["1", "2" ,"3", "absolutua"]
         comboranking['values'] = opciones
         comboranking.current(3)
         comboranking.pack()

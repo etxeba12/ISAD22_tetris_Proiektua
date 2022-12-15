@@ -140,8 +140,6 @@ class TableroaPanela(tk.Frame):
 			self.tab.betetako_lerroak_ezabatu()
 			self.tab.mugitu_behera()
 			partidaIrabaziak = self.tab.puntuazioa // 100  # 1000 puntu heltzerakoan, partida bat irabazten duzula suposatu dugu
-			print(partidaIrabaziak)
-			print(partidaIrabaziak in bostenMultiploak)
 			if (partidaIrabaziak in bostenMultiploak):
 				bostenMultiploak.pop(0)
 				db.sariaSartu(Izena, "Handiak")
