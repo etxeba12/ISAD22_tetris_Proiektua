@@ -18,6 +18,7 @@ class ErregistroPantaila():
         self.window.configure(bg='white')
         self.window.title("Erregistro pantaila")
 
+        #Logoa
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img,  bg='white')
         panel.pack(side="top", fill="both", expand="no")
@@ -78,40 +79,42 @@ class ErregistroPantaila():
         #galdera 2 testua
 
         # botoia erregistratu
-        button = tk.Button(self.window, text="ERREGISTRATU", command=(datuakJaso),width=25,height=2)
+        button = tk.Button(self.window, text="ERREGISTRATU", command=(datuakJaso),width=23,height=2)
         button.pack()
         # botoia erregistratu
 
         # botoia atrera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELATU", command=(self.atzerabueltatu),width=25,height=2)
+        button = tk.Button(self.window, text="ATZERA BUELATU", command=(self.atzerabueltatu),width=23,height=2)
         button.pack()
         # botoia atzera bueltatu
 
         self.window.mainloop()
 
     def erregistratu(self,Izena,Pasahitza,Galdera1,Galdera2):
-
+        #sartutako datuak zuzenak diren konprobatu
+        #baldin badira, DB-n erabiltzaile berria gehitu
         datuOnak= self.datuakKonrobatu(Izena,Pasahitza,Galdera1,Galdera2)
-
         if(datuOnak):
             erabilsartutadago = db.erregistratu(Izena, Pasahitza, Galdera1, Galdera2)
             if(erabilsartutadago):
                 messagebox.showinfo(message="Izena hau hartuta dago", title="ErregistroError")
-                self.window.destroy()
-                ErregistroPantaila()
+                self.erregistratuOkerra()
             else:
-                self.window.destroy()
-                Id.Identifikatu()
+                self.atzerabueltatu()
         else:
             messagebox.showinfo(message="Datu guztiak bete behar dira", title="ErregistroError")
-            self.window.destroy()
-            ErregistroPantaila()
+            self.erregistratuOkerra()
+
+    def erregistratuOkerra(self):
+        self.window.destroy()
+        ErregistroPantaila()
 
     def atzerabueltatu(self):
         self.window.destroy()
         Id.Identifikatu()
 
     def datuakKonrobatu(self,Izena,Pasahitza,Galdera1,Galdera2):
+        # Datuak hutsik ez daudela ziurtatu
         if len(Izena)==0 or len(Pasahitza)==0 or len(Galdera1)==0 or len(Galdera2)==0:
             return False
         else:

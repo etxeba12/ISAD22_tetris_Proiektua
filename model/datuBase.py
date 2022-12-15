@@ -3,6 +3,7 @@ import sqlite3
 con = sqlite3.connect("datuBase.db")
 cur = con.cursor()
 
+#Taula sortzeko eta zutabe berriak gehitzeko metodoak----------
 def taulaSortu():
     res = cur.execute("SELECT name FROM sqlite_master WHERE name='erabiltzaileak'")
     if(res.fetchone() is None):
@@ -15,6 +16,10 @@ def taulaSortu():
 def insertZutabe():
      cur.execute("ALTER TABLE erabiltzaileak ADD pantaila VARCHAR(15)")
      cur.execute("ALTER TABLE erabiltzaileak ADD musika VARCHAR(15)")
+
+#--------------------------
+
+#Pantaila kolorearekin erlazionatutako kontsultak---------------
 def pantailaKolEguneratu(izena, kol):
     if not kolBera(izena, kol):
         erag = f"UPDATE erabiltzaileak SET pantaila='{kol}' WHERE izena='{izena}'"
@@ -32,7 +37,9 @@ def pantailaKolEman(izena):
     res = cur.execute(erag)
     ema = res.fetchone()
     return ema
+#--------------------------------------------------------
 
+# Musikarekin erlazionatutako kontsultak-------------------------
 def musikaEguneratu(izena, mus):
     if not musBera(izena, mus):
         erag = f"UPDATE erabiltzaileak SET musika='{mus}' WHERE izena='{izena}'"
@@ -50,21 +57,26 @@ def musEman(izena):
     res = cur.execute(erag)
     ema = res.fetchone()
     return ema
+#-------------------------------------
 
-def identifikatu(Izena,Pasahitza):
-    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=? AND pasahitza=?",(Izena,Pasahitza))
-    if(res.fetchone() is None):
-        return False
-    else:
-        return True
-
+#Administratzailearekin erlazionatutako kontsultak----------------
 def admin_eg(izena):
     if (izena == "Iker" or izena == "Miriam" or izena == "Imanol"):
         erag=f"UPDATE erabiltzaileak SET admin=True WHERE izena='{izena}'"
         cur.execute(erag)
         con.commit()
-
-
+def admin_da(izena):
+    erag=f"SELECT admin FROM erabiltzaileak WHERE izena='{izena}'"
+    res = cur.execute(erag)
+    ema= res.fetchone()
+    return ema[0]
+#-------------------------------------------
+def identifikatu(Izena, Pasahitza):
+    res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=? AND pasahitza=?", (Izena, Pasahitza))
+    if (res.fetchone() is None):
+        return False
+    else:
+        return True
 def erregistratu(izena,pasahitza,gald1,gald2):
     #erabiltzaile izena badago komprobatzen dugu
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?",[izena])
@@ -78,6 +90,7 @@ def erregistratu(izena,pasahitza,gald1,gald2):
         admin_eg(izena)
         badagoIzenBera= False
     return badagoIzenBera
+
 def datuakLortu(Izena):
     res = cur.execute("SELECT * FROM erabiltzaileak WHERE izena=?", [Izena])
     return res.fetchone()
@@ -89,11 +102,7 @@ def jarraituPartida (izena):
     #Ez bada gorde (None) orduan ez da jarraitu aukerarik
     return not( ema[0] is None)
 
-def admin_da(izena):
-    erag=f"SELECT admin FROM erabiltzaileak WHERE izena='{izena}'"
-    res = cur.execute(erag)
-    ema= res.fetchone()
-    return ema[0]
+
 
 def pasahitzaAldatu(izena,P1):
     res = cur.execute("UPDATE erabiltzaileak SET pasahitza=? WHERE izena=?",(P1,izena))
@@ -107,8 +116,6 @@ def erabiltzaileMailakaLortu(maila):
     print(maila)
     res = cur.execute(f"SELECT izena,{maila} FROM erabiltzaileak")
     return res.fetchall()
-
-
 
 def erabiltzaileEzabatu(Izena):
     res = cur.execute("DELETE FROM erabiltzaileak WHERE izena=?",[Izena])

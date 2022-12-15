@@ -13,7 +13,7 @@ class pasahitzaBerreskuratu():
         super(pasahitzaBerreskuratu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
-        self.window.geometry('300x400')
+        self.window.geometry('300x500')
         self.window.configure(bg='white')
         self.window.title("Pasahitza Berreskuratu")
 
@@ -23,6 +23,7 @@ class pasahitzaBerreskuratu():
             g2 = Erabiltzaileerantzun2.get()
             self.datuakKonprobatu(izenaErabil,g1,g2)
 
+        #Logoa
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
@@ -34,7 +35,7 @@ class pasahitzaBerreskuratu():
         izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3,relief="sunken",width=25,height=2)
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",width=29)
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",width=25)
         izenaErabiltzaile.pack()
         # erabiltzaile izena
 
@@ -45,7 +46,7 @@ class pasahitzaBerreskuratu():
         galdera1label = tk.Label(self.window, textvariable=galdera1, borderwidth=3,relief="sunken",width=25,height=2)
         galdera1label.pack()
 
-        Erabiltzaileerantzun1 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3,relief="sunken",width=29)
+        Erabiltzaileerantzun1 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3,relief="sunken",width=25)
         Erabiltzaileerantzun1.pack()
         # 1.galdera
 
@@ -56,24 +57,24 @@ class pasahitzaBerreskuratu():
         galdera2label = tk.Label(self.window, textvariable=galdera2, borderwidth=3, relief="sunken",width=25,height=2 )
         galdera2label.pack()
 
-        Erabiltzaileerantzun2 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",width=29)
+        Erabiltzaileerantzun2 = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken",width=25)
         Erabiltzaileerantzun2.pack()
         # 2.galdera
 
         #botoia onartu
-        button = tk.Button(self.window, text="BERRESKURATU",command=(datuakJaso),width=25,height=2)
+        button = tk.Button(self.window, text="BERRESKURATU",command=(datuakJaso),width=23,height=2)
         button.pack()
         #botoia onartu
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=25,height=2)
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=23,height=2)
         button.pack()
         # botoia atzera bueltatu
-
 
         self.window.mainloop()
 
     def datuakKonprobatu(self,izenaErabil,g1,g2):
+        #sartutako datuak DB-koekin bat egiten duten konprobatu
         erantzun = db.pasahitzaBerreskuratu(izenaErabil)
         if erantzun is None:
             messagebox.showinfo(message="Izen hori duen erabiltzailerik ez dago", title="BerreskuratuError")
@@ -82,17 +83,19 @@ class pasahitzaBerreskuratu():
         else:
             if erantzun[1] == g1:
                 if erantzun[2] == g2:
+                    # zuzena bada, PasahitzaAldatu lehioa zabaldu, hau itxiz.
                     pa.Izena = izenaErabil
                     self.window.destroy()
                     pa.PasahitzaAldatu(True)
                 else:
                     messagebox.showinfo(message="Galderak txarto erantzun dituzu", title="BerreskuratuError")
-                    self.window.destroy()
-                    pasahitzaBerreskuratu()
+                    self.pasahitzaOkerra()
             else:
                 messagebox.showinfo(message="Galderak txarto erantzun dituzu", title="BerreskuratuError")
-                self.window.destroy()
-                pasahitzaBerreskuratu()
+                self.pasahitzaOkerra()
+    def pasahitzaOkerra(self):
+        self.window.destroy()
+        pasahitzaBerreskuratu()
 
     def atzerabueltatu(self):
         self.window.destroy()

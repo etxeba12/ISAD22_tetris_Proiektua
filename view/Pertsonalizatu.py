@@ -14,6 +14,7 @@ class Pertsonalizatu():
         self.window.configure(bg='white')
         self.window.title(" Pertsonalizazio aukerak")
 
+        #Logoa
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
@@ -21,41 +22,40 @@ class Pertsonalizatu():
         per.Izena=Izena
 
         # Adreilu aldatzeko botoia
-        adreiluaAldButton = tk.Button(self.window, text="ADREILU KOLOREA ALDATU",
-                                      command=self.piezaAukera)
+        adreiluaAldButton = tk.Button(self.window, text="ADREILU KOLOREA ALDATU",command=self.piezaAukera,width=25,height=2)
         adreiluaAldButton.pack()
         # Adreilu aldatzeko botoia
 
         # Pantaila aldatzeko botoia
-        pantailaAlButton = tk.Button(self.window, text="PANTAILA KOLOREA ALDATU",
-                                     command=self.pantailaAukera )
+        pantailaAlButton = tk.Button(self.window, text="PANTAILA KOLOREA ALDATU",command=self.pantailaAukera,width=25,height=2 )
         pantailaAlButton.pack()
         # Pantaila aldatzeko botoia
 
         # Musika aldatzeko botoia
-        musikaAldButton = tk.Button(self.window, text="      MUSIKA ALDATU      ", command=self.musikaAukera)
+        musikaAldButton = tk.Button(self.window, text="      MUSIKA ALDATU      ", command=self.musikaAukera,width=25,height=2)
         musikaAldButton.pack()
         # Musika aldatzeko botoia
 
-        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
+        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
         buttonBueltatu.pack()
-
 
         self.window.mainloop()
 
     def pantailaAukera(self):
-        self.window.destroy()
         per.Aukera=1
-        per.PertsonalizazioAukera()
+        self.hurrengoPantaila()
 
     def piezaAukera(self):
-        self.window.destroy()
         per.Aukera = 2
-        per.PertsonalizazioAukera()
+        self.hurrengoPantaila()
 
     def musikaAukera(self):
-        self.window.destroy()
         per.Aukera = 3
+        self.hurrengoPantaila()
+
+    def hurrengoPantaila(self):
+        self.window.destroy()
+        per.Izena = Izena
         per.PertsonalizazioAukera()
 
     def bueltatu(self):

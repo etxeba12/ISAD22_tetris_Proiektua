@@ -12,10 +12,11 @@ class PertsonalizazioAukera():
     def __init__(self):
         super(PertsonalizazioAukera, self).__init__()
         self.window = tk.Tk()
-        self.window.geometry('300x300')
+        self.window.geometry('300x400')
         self.window.configure(bg='white')
         self.window.title("Erabiltzailearen Pertsonalizazioa")
 
+        #Logoa
         img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
         panel = tk.Label(self.window, image=img, bg='white')
         panel.pack(side="top", fill="both", expand="no")
@@ -28,46 +29,6 @@ class PertsonalizazioAukera():
             self.musikaAukeratu()
 
         self.window.mainloop()
-
-    def pertsonalizazioGorde(self, comboLaukiak, comboKoloreak):
-        forma = comboLaukiak.get()
-        hiztegia_kol = {
-            "horia": "yellow",
-            "zian": "cyan",
-            "urdina": "blue",
-            "laranja": "orange",
-            'berdea': "green",
-            'gorria': "red",
-            'morea': "purple",
-            'zuria':"white",
-        }
-        kolorea = hiztegia_kol[comboKoloreak.get()]
-        db.kolore_Pertsonalizatu(Izena, forma, kolorea)
-        self.apBueltatu()
-
-    def adreiluAldatu(self, comboKoloreak):
-        laukia = tk.StringVar()
-        laukia.set("  LAUKI BAT AUKERATU  ")
-
-        laukialabel = tk.Label(self.window, textvariable=laukia, borderwidth=3, relief="sunken",width=25,height=2 )
-        laukialabel.pack()
-
-        #combobox laukiak
-        comboLaukiak = ttk.Combobox(self.window, width=26,state="readonly")
-        opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
-        comboLaukiak['values'] = opciones
-        comboLaukiak.current(0)
-        comboLaukiak.pack()
-
-        #botoia gorde
-
-        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda:self.pertsonalizazioGorde(comboLaukiak,comboKoloreak),width=25,height=2)
-        buttonGorde.pack()
-
-        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
-        buttonBueltatu.pack()
-
-
     def koloreaAldatu(self, pantaila):
         kolorea = tk.StringVar()
         kolorea.set("  KOLORE BAT AUKERATU  ")
@@ -76,10 +37,11 @@ class PertsonalizazioAukera():
         kolorelabel.pack()
 
         # combobox Koloreak
-        comboKoloreak = ttk.Combobox(self.window, width=26,state="readonly")
+        comboKoloreak = ttk.Combobox(self.window, width=24,state="readonly")
         opcionesEus=['horia','zian','urdina','laranja','berdea','gorria','morea','zuria']
         comboKoloreak['values'] = opcionesEus
         comboKoloreak.pack()
+
         hiztegia_kol = {
             "yellow": "horia",
             "cyan": "zian",
@@ -93,19 +55,28 @@ class PertsonalizazioAukera():
         if pantaila:
             kolor = db.pantailaKolEman(Izena)
             ema = hiztegia_kol.get(str(kolor[0]))
+            #Hasiera baten comboKoloreak azkeneko pantaila kolorea izango du islatuta
             comboKoloreak.current(opcionesEus.index(str(ema)))
             # botoia gorde
-            buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak),width=25,height=2 )
+            buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.pantailaKolAld(comboKoloreak),width=23,height=2 )
             buttonGorde.pack()
-
-            buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
-            buttonBueltatu.pack()
-
+            self.atzeraBotoia()
         else:
             comboKoloreak.current(0)
             self.adreiluAldatu(comboKoloreak)
+    def atzeraBotoia(self):
+        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu, width=23, height=2)
+        buttonBueltatu.pack()
 
     def pantailaKolAld(self, comboKolorea):
+        kolorea = self.hiztegiaEusIng()
+        db.pantailaKolEguneratu(Izena, kolorea)
+        if db.kolBera(Izena, comboKolorea.get()):
+            messagebox.showinfo(message="Kolore horrekin dago jada pamtaila", title="KoloreBera")
+        self.apBueltatu()
+
+    def hiztegiaEusIng(self, comboKoloreak):
+        # koloreen itzulketa: EUS--ING
         hiztegia_kol = {
             "horia": "yellow",
             "zian": "cyan",
@@ -114,12 +85,34 @@ class PertsonalizazioAukera():
             'berdea': "green",
             'gorria': "red",
             'morea': "purple",
-            'zuria':"white",
+            'zuria': "white",
         }
-        print(comboKolorea.get())
-        db.pantailaKolEguneratu(Izena,hiztegia_kol[comboKolorea.get()])
-        if db.kolBera(Izena, comboKolorea.get()):
-            messagebox.showinfo(message="Kolore horrekin dago jada pamtaila", title="KoloreBera")
+        kolorea = hiztegia_kol[comboKoloreak.get()]
+        return kolorea
+
+    def adreiluAldatu(self, comboKoloreak):
+        #Adreilu bat aukeratu eta honen kolorea aldatuko da, DB-n informazio hau gordez: pertsonalizazioaGorde metodoan
+        laukia = tk.StringVar()
+        laukia.set("  LAUKI BAT AUKERATU  ")
+        laukialabel = tk.Label(self.window, textvariable=laukia, borderwidth=3, relief="sunken", width=25, height=2)
+        laukialabel.pack()
+
+        # combobox laukiak
+        comboLaukiak = ttk.Combobox(self.window, width=24, state="readonly")
+        opciones = ["laukia", "zutabea", "lforma", "lformaAlderantzizko", "zforma", "zformaAlderantzizko", "tforma"]
+        comboLaukiak['values'] = opciones
+        comboLaukiak.current(0)
+        comboLaukiak.pack()
+
+        # botoia gorde
+        buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda: self.pertsonalizazioGorde(comboLaukiak, comboKoloreak), width=23,height=2)
+        buttonGorde.pack()
+        self.atzeraBotoia()
+
+    def pertsonalizazioGorde(self, comboLaukiak, comboKoloreak):
+        forma = comboLaukiak.get()
+        kolorea = self.hiztegiaEusIng(comboKoloreak)
+        db.kolore_Pertsonalizatu(Izena, forma, kolorea)
         self.apBueltatu()
 
     def musikaAukeratu(self):
@@ -130,25 +123,23 @@ class PertsonalizazioAukera():
         musikalabel.pack()
 
         # combobox Koloreak
-        comboMusikak = ttk.Combobox(self.window, width=26,state="readonly")
+        comboMusikak = ttk.Combobox(self.window, width=24,state="readonly")
         opciones = ["Help", "LaFlaca", "Tetris", "Thunderstruck"]
         comboMusikak['values'] = opciones
         musi = db.musEman(Izena)
         comboMusikak.current(opciones.index(str(musi[0])))
         comboMusikak.pack()
 
-         # botoia gorde
-        buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.musikaAldatu(comboMusikak),width=25,height=2 )
+        # botoia gorde
+        buttonGorde = tk.Button(self.window, text="ONARTU", command=lambda:self.musikaAldatu(comboMusikak),width=23,height=2 )
         buttonGorde.pack()
-
-        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=25,height=2)
-        buttonBueltatu.pack()
+        self.atzeraBotoia()
 
 
     def musikaAldatu(self, comboMusikak):
         db.musikaEguneratu(Izena, comboMusikak.get())
         if db.musBera(Izena, comboMusikak.get()):
-            messagebox.showinfo(message="Kolore horrekin dago jada pamtaila", title="KoloreBera")
+            messagebox.showinfo(message="Jada musika hori jarrita zeneukan", title="KoloreBera")
         self.apBueltatu()
 
     def apBueltatu(self):

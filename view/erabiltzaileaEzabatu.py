@@ -16,9 +16,10 @@ class erabiltzaileaEzabatu():
         self.window.configure(bg='white')
         self.window.title("Ezabatu jokalari")
 
-        img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
-        panel = tk.Label(self.window, image=img, bg='white')
-        panel.pack(side="top", fill="both", expand="no")
+        #Logoa
+        self.img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
+        self.panel = tk.Label(self.window, image=self.img, bg='white')
+        self.panel.pack(side="top", fill="both", expand="no")
 
         def datuakJaso():
             Izena = izenaErabiltzaile.get()
@@ -38,26 +39,25 @@ class erabiltzaileaEzabatu():
         izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", width=25,height=2)
         izenalabel.pack()
 
-        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken", width=29)
+        izenaErabiltzaile = tk.Entry(self.window, justify=tk.CENTER, textvariable=tk.StringVar(), state=tk.NORMAL, borderwidth=3, relief="sunken", width=24)
         izenaErabiltzaile.pack()
 
         # botoia ezabatu
-        button = tk.Button(self.window, text="EZABATU", command=(datuakJaso),width=25,height=2)
+        button = tk.Button(self.window, text="EZABATU", command=(datuakJaso),width=23,height=2)
         button.pack()
         # botoia ezabatu
 
         # botoia atzera bueltatu
-        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=25,height=2)
+        button = tk.Button(self.window, text="ATZERA BUELTATU", command=(self.atzerabueltatu),width=23,height=2)
         button.pack()
         # botoia atzera bueltatu
 
-    def ezabatuErabil(self,Izena):
-        if(Izena != "Iker" and Izena != "Miriam" and Izena != "Imanol"):
+    def ezabatuErabil(self,IzenaEzab):
+        if(IzenaEzab != Izena):
             db.erabiltzaileEzabatu(Izena)
         else:
-            messagebox.showinfo(message="erabiltzaile hau ezin da ezabatu", title="errorea")
-        self.window.destroy()
-        ap.aukerenPantaila()
+            messagebox.showinfo(message="Ezin duzu zure burua ezabatu", title="errorea")
+        self.atzerabueltatu()
 
     def atzerabueltatu(self):
         self.window.destroy()

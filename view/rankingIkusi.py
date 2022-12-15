@@ -14,10 +14,15 @@ class rankingIkusi():
         self.window.title("Ranking pantaila")
         self.window.configure(bg='white')
 
+        #Logoa
+        self.img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
+        self.panel = tk.Label(self.window, image=self.img, bg='white')
+        self.panel.pack(side="top", fill="both", expand="no")
+
         izena = tk.StringVar()
         izena.set("  RANKING  ")
 
-        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", width=15,height=2)
+        izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", width=25,height=2)
         izenalabel.pack()
 
         if(maila == "absolutua"):
@@ -30,6 +35,7 @@ class rankingIkusi():
             luzera = len(zerOrdenatu)
         else:
             luzera = 5
+        # 5 erabiltzaile baino gehiago egotekotan, 5 hoberen izena eta puntuazioak ikusiko dira
         while i < luzera:
             bat = tk.StringVar()
             bat.set("  ERABILTZAILE IZENA  ")
@@ -41,20 +47,20 @@ class rankingIkusi():
         rankingaukeratu = tk.StringVar()
         rankingaukeratu.set("  LAUKI BAT AUKERATU  ")
 
-        rankingaukeratulabel = tk.Label(self.window, textvariable=rankingaukeratu, borderwidth=3, relief="sunken", )
+        rankingaukeratulabel = tk.Label(self.window, textvariable=rankingaukeratu, borderwidth=3, relief="sunken",width=25,height=2)
         rankingaukeratulabel.pack()
 
         # combobox ranking
-        comboranking = ttk.Combobox(self.window, width=17, state="readonly")
+        comboranking = ttk.Combobox(self.window, width=24, state="readonly")
         opciones = ["maila1", "maila2" ,"maila3", "absolutua"]
         comboranking['values'] = opciones
         comboranking.current(3)
         comboranking.pack()
 
-        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda: self.rankingEguneratu(comboranking))
+        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda: self.rankingEguneratu(comboranking),width=23,height=2)
         buttonGorde.pack()
 
-        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
+        buttonBueltatu = tk.Button(self.window, text="BUELTATU", command=self.bueltatu,width=23,height=2)
         buttonBueltatu.pack()
 
     def rankingEguneratu(self,comboranking):
