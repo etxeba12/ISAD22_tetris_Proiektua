@@ -104,7 +104,6 @@ def erabiltzaileGuztiakLortu():
     return res.fetchall()
 
 def erabiltzaileMailakaLortu(maila):
-    print(maila)
     res = cur.execute(f"SELECT erabiltzaileIzena,puntuazioa FROM partidaDatuak WHERE maila=?",[maila])
     return res.fetchall()
 
@@ -156,12 +155,12 @@ def puntuazioGordeMailaka(Izena,puntuazioa,maila):
     res = cur.execute(f"UPDATE erabiltzaileak SET puntuazioa=? WHERE izena=?",(puntuak, Izena))
     con.commit()
 
-def sariaSartu(Izena,saria):
-    sari = "sari" + str(saria)
-    print(sari)
-    sariKantitate= cur.execute(f"SELECT {sari} FROM erabiltzaileak WHERE izena=?", [Izena])
-    ema1 = sariKantitate.fetchone()
-    sariBerri = ema1[0] + 1
+def partidaIrabaziak(Izena,maila):
+    res = cur.execute("SELECT count(*) FROM partidaDatuak WHERE erabiltzaileIzena=? AND maila=? AND puntuazioa>=2000", (Izena,maila))
+    return res.fetchone()
+
+def sariaSartu(Izena,saria,maila):
+    sari = "sariaMaila" + str(maila)
     res = cur.execute(f"UPDATE erabiltzaileak SET {sari}=? WHERE izena=?",
-                      (sariBerri,Izena))
+                      (saria,Izena))
     con.commit()

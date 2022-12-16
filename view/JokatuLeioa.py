@@ -11,12 +11,10 @@ from pygame import mixer
 
 Izena = " "
 Maila = " "
-puntuazioa = " "
 partidaJarraitu = False
 tablerogordeta = []
-bostenMultiploak = [5, 15, 25, 35,45]  # jarraian 5 partida (5000 puntu irabazteagatik) pasatzeagatik, premio hobea
 Kolorea = " "
-
+SariakEman = [1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
@@ -40,7 +38,7 @@ class JokatuLeioa(object):
 		button.pack()
 
 		# botoia pasahitza
-		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.aukerenPantailaraJoan)
+		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.atzeraBueltatu)
 		buttonAtzera.pack()
 		# botoia pasahitza
 
@@ -71,6 +69,12 @@ class JokatuLeioa(object):
 		abiadura = partidaDatuak[1]
 		puntu = partidaDatuak[2]
 		JokatuLeioa(tamaina,abiadura)
+
+	def atzeraBueltatu(self):
+		if(puntuak != 0):
+			db.puntuazioGordeMailaka(Izena, puntuak, Maila)
+		kant = db.partidaIrabaziak(Izena, Maila)
+		self.aukerenPantailaraJoan()
 
 	def aukerenPantailaraJoan(self):
 		self.window.destroy()
@@ -139,10 +143,6 @@ class TableroaPanela(tk.Frame):
 		try:
 			self.tab.betetako_lerroak_ezabatu()
 			self.tab.mugitu_behera()
-			partidaIrabaziak = self.tab.puntuazioa // 100  # 1000 puntu heltzerakoan, partida bat irabazten duzula suposatu dugu
-			if (partidaIrabaziak in bostenMultiploak):
-				bostenMultiploak.pop(0)
-				db.sariaSartu(Izena, "Handiak")
 		except Exception as error:
 			try:
 				self.tab.pieza_finkotu(self.tab.posizioa)
@@ -150,6 +150,9 @@ class TableroaPanela(tk.Frame):
 				self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 			except Exception as e:
 				print("GAMEOVER")
+				db.puntuazioGordeMailaka(Izena, self.tab.puntuazioa, Maila)
+				kant = db.partidaIrabaziak(Izena,Maila)
+				self.sariakEmanMailaka(Maila,kant[0])
 				self.tab.hasieratu_tableroa()
 				return
 		self.jokatzen = self.after(abi, self.pausu_bat)
@@ -157,6 +160,8 @@ class TableroaPanela(tk.Frame):
 
 	def puntuazioa_eguneratu(self):
 		if self.puntuazio_panela:
+			global puntuak
+			puntuak = self.tab.puntuazioa
 			self.puntuazio_panela.set(f"Puntuazioa: {(self.tab.puntuazioa)}")
 
 	def joku_kontrola(self, event):
@@ -181,7 +186,6 @@ class TableroaPanela(tk.Frame):
 			for t in range(self.tab.tamaina[0]):
 				if (self.tab.tab[i][t] != None):
 					Gordetakopartida[i][t] = self.tab.tab[i][t]
-		db.puntuazioGordeMailaka(Izena,self.tab.puntuazioa,Maila)
 		serializatua = pickle.dumps(Gordetakopartida)
 		puntuazioapartida = self.tab.puntuazioa
 		db.partidaGorde(Izena,serializatua,abi,puntuazioapartida,self.tab.tamaina[0],self.tab.tamaina[1])
@@ -202,5 +206,14 @@ class TableroaPanela(tk.Frame):
 		self.marraztu_tableroa()
 		self.jokatzen = self.after(400, self.pausu_bat)
 		JokatuLeioa.musikaEntzun(self.master_)
+
+	def sariakEmanMailaka(self,maila,kant):
+		if(kant in SariakEman):
+			if (maila ==  1):
+				db.sariaSartu(Izena,kant,maila)
+			elif (maila ==2):
+				db.sariaSartu(Izena, kant, maila)
+			else:
+				db.sariaSartu(Izena, kant, maila)
 
 
