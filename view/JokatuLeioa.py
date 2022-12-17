@@ -37,10 +37,10 @@ class JokatuLeioa(object):
 		button = tk.Button(self.window, text="PARTIDA HASI")
 		button.pack()
 
-		# botoia pasahitza
-		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.atzeraBueltatu)
+		# botoia atzera
+		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.atzeraBueltatu,state="disable")
 		buttonAtzera.pack()
-		# botoia pasahitza
+		# botoia atzera
 
 		puntuazioa = tk.StringVar()
 		puntuazioa.set("Puntuazioa: 0")
@@ -49,7 +49,7 @@ class JokatuLeioa(object):
 		puntuazioalabel.pack()
 
 		self.canvas = TableroaPanela(master=self.window,Tamaina=tamaina, puntuazioalabel=puntuazioa, master2=self)
-		button.configure(command=lambda: self.canvas.jolastu(button, self.window))
+		button.configure(command=lambda: self.canvas.jolastu(button,buttonAtzera, self.window))
 		self.canvas.pack()
 		self.window.bind("<Up>", self.canvas.joku_kontrola)
 		self.window.bind("<Down>", self.canvas.joku_kontrola)
@@ -199,9 +199,10 @@ class TableroaPanela(tk.Frame):
 		JokatuLeioa.aukerenPantailaraJoan(self.master_)
 
 
-	def jolastu(self, button, window):
+	def jolastu(self, button,buttonAtzera, window):
 
 		button.configure(text=" PARTIDA GORDE ", command=self.partida_gorde)
+		buttonAtzera.configure(state="active")
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		if not partidaJarraitu:
