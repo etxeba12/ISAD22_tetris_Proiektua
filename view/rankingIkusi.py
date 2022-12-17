@@ -18,7 +18,7 @@ class rankingIkusi():
         izena.set("  RANKING  ")
 
         izenalabel = tk.Label(self.window, textvariable=izena, borderwidth=3, relief="sunken", width=15,height=2)
-        izenalabel.pack()
+        izenalabel.pack(pady=4)
 
         if(maila == "absolutua"):
             zer = db.erabiltzaileGuztiakLortu()
@@ -42,20 +42,20 @@ class rankingIkusi():
         rankingaukeratu = tk.StringVar()
         rankingaukeratu.set("  LAUKI BAT AUKERATU  ")
 
-        rankingaukeratulabel = tk.Label(self.window, textvariable=rankingaukeratu, borderwidth=3, relief="sunken", )
-        rankingaukeratulabel.pack()
+        rankingaukeratulabel = tk.Label(self.window, textvariable=rankingaukeratu, borderwidth=3, relief="sunken", width=25, height=2 )
+        rankingaukeratulabel.pack(pady=2)
 
         # combobox ranking
-        comboranking = ttk.Combobox(self.window, width=17, state="readonly")
+        comboranking = ttk.Combobox(self.window, width=27, state="readonly",)
         opciones = ["1", "2" ,"3", "absolutua"]
         comboranking['values'] = opciones
         comboranking.current(3)
-        comboranking.pack()
+        comboranking.pack(pady=2)
 
-        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda: self.rankingEguneratu(comboranking))
-        buttonGorde.pack()
+        buttonGorde = tk.Button(self.window, text="ONARTU",command=lambda: self.rankingEguneratu(comboranking), width=25, height=2)
+        buttonGorde.pack(pady=2)
 
-        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu)
+        buttonBueltatu = tk.Button(self.window, text="Bueltatu", command=self.bueltatu, width=25, height=2)
         buttonBueltatu.pack()
 
     def rankingEguneratu(self,comboranking):

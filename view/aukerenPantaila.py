@@ -9,7 +9,7 @@ import view.Identifikatu as Id
 import view.Pertsonalizatu as pp
 import model.Piezak as pi
 import view.rankingIkusi as ri
-
+import view.sariakIkusi as si
 Izena = " "
 listaDatuak = ""
 Maila = 1
@@ -81,6 +81,12 @@ class aukerenPantaila():
             buttonJarraituPa = tk.Button(self.window, text=" PARTIDA JARRAITU ", command=(self.partidaJarraitu),width=25,height=2)
             buttonJarraituPa.pack()
         # botoia partida jarraitu
+
+        # botoia sariak
+        buttonSariak = tk.Button(self.window, text=" SARIAK IKUSI ", command=(self.sariakIkusiJoan),
+                                             width=25, height=2)
+        buttonSariak.pack()
+        # botoia sariak
 
         #botoia pertsonalizatu
         buttonPertsonalizatu = tk.Button(self.window, text=" PERTSONALIZATU ", command=(self.pertsonalizatu),width=25,height=2)
@@ -156,6 +162,11 @@ class aukerenPantaila():
         jl.Kolorea = db.pantailaKolEman(Izena)
         jl.partidaJarraitu = True
         jl.JokatuLeioa.partida_jarraitu(self)
+
+    def sariakIkusiJoan(self):
+        si.Izena = Izena
+        self.window.destroy()
+        si.sariakIkusi()
 
     def pertsonalizatu(self):
         self.window.destroy()

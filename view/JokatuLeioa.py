@@ -74,6 +74,8 @@ class JokatuLeioa(object):
 		if(puntuak != 0):
 			db.puntuazioGordeMailaka(Izena, puntuak, Maila)
 		kant = db.partidaIrabaziak(Izena, Maila)
+		self.sariakEmanMailakaAtzera(Maila,kant[0])
+		db.partidaJarraituakGehitu(Izena, puntuak)
 		self.aukerenPantailaraJoan()
 
 	def aukerenPantailaraJoan(self):
@@ -96,6 +98,10 @@ class JokatuLeioa(object):
 	def musikaGelditu(self):
 		if self.musikaHasi:
 			mixer.music.stop()
+
+	def sariakEmanMailakaAtzera(self,Maila,kant):
+		if(kant in SariakEman):
+			db.sariaSartu(Izena,kant,Maila)
 
 class TableroaPanela(tk.Frame):
 
@@ -153,6 +159,7 @@ class TableroaPanela(tk.Frame):
 				db.puntuazioGordeMailaka(Izena, self.tab.puntuazioa, Maila)
 				kant = db.partidaIrabaziak(Izena,Maila)
 				self.sariakEmanMailaka(Maila,kant[0])
+				db.partidaJarraituakGehitu(Izena, puntuak)
 				self.tab.hasieratu_tableroa()
 				return
 		self.jokatzen = self.after(abi, self.pausu_bat)

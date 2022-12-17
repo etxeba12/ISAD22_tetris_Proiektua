@@ -103,6 +103,10 @@ def erabiltzaileGuztiakLortu():
     res = cur.execute("SELECT izena,puntuazioa FROM erabiltzaileak")
     return res.fetchall()
 
+def erabiltzaileSariakLortu(Izena):
+    res = cur.execute("SELECT sariaMaila1,sariaMaila2,sariaMaila3,partidaJarraituak FROM erabiltzaileak WHERE izena=?",[Izena])
+    return res.fetchone()
+
 def erabiltzaileMailakaLortu(maila):
     res = cur.execute(f"SELECT erabiltzaileIzena,puntuazioa FROM partidaDatuak WHERE maila=?",[maila])
     return res.fetchall()
@@ -163,4 +167,15 @@ def sariaSartu(Izena,saria,maila):
     sari = "sariaMaila" + str(maila)
     res = cur.execute(f"UPDATE erabiltzaileak SET {sari}=? WHERE izena=?",
                       (saria,Izena))
+    con.commit()
+
+def partidaJarraituakGehitu(Izena,puntuak):
+    if(puntuak >=2000):
+        jarraituak = cur.execute("SELECT partidaJarraituak FROM erabiltzaileak WHERE izena=?", [Izena])
+        jarraitu = jarraituak.fetchone()
+        guztira = jarraitu[0] + 1
+        res = cur.execute(f"UPDATE erabiltzaileak SET partidaJarraituak=? WHERE izena=?",(guztira, Izena))
+    else:
+        res = cur.execute(f"UPDATE erabiltzaileak SET partidaJarraituak=? WHERE izena=?", (0, Izena))
+
     con.commit()
