@@ -15,6 +15,11 @@ class sariakIkusi():
         self.window.title("Sariak pantaila")
         self.window.configure(bg='white')
 
+        # Logoa
+        self.img = ImageTk.PhotoImage(Image.open("tetris.png").reduce(2))
+        self.panel = tk.Label(self.window, image=self.img, bg='white')
+        self.panel.pack(side="top", fill="both", expand="no")
+
         izena = tk.StringVar()
         izena.set("  SARIAK  ")
 
