@@ -29,7 +29,6 @@ class rankingIkusi():
             zer = db.erabiltzaileGuztiakLortu()
         else:
             zer = db.erabiltzaileMailakaLortu(maila)
-            print(zer)
         zerOrdenatu = sorted(zer, key=lambda zer: zer[1],reverse=True)
         i = 0
         if(len(zerOrdenatu)< 5):
