@@ -12,7 +12,7 @@ class erabiltzaileaEzabatu():
         super(erabiltzaileaEzabatu, self).__init__()
         db.taulaSortu()
         self.window = tk.Tk()
-        self.window.geometry('300x450')
+        self.window.geometry('300x500')
         self.window.configure(bg='white')
         self.window.title("Ezabatu jokalari")
 
