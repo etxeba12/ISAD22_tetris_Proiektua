@@ -27,7 +27,6 @@ class sariakIkusi():
         izenalabel.pack(pady=4)
 
         zer = db.erabiltzaileSariakLortu(Izena)
-        print(zer)
         maila = 0
         while maila < 4:
             bat = tk.StringVar()
