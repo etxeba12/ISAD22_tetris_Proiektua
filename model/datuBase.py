@@ -110,9 +110,12 @@ def erabiltzaileGuztiakLortu():
     res = cur.execute("SELECT izena,puntuazioa FROM erabiltzaileak")
     return res.fetchall()
 
+def erabiltzaileSariakLortu(Izena):
+    res = cur.execute("SELECT sariaMaila1,sariaMaila2,sariaMaila3,partidaJarraituak FROM erabiltzaileak WHERE izena=?",[Izena])
+    return res.fetchone()
+
 def erabiltzaileMailakaLortu(maila):
-    print(maila)
-    res = cur.execute(f"SELECT izena,{maila} FROM erabiltzaileak")
+    res = cur.execute(f"SELECT erabiltzaileIzena,puntuazioa FROM partidaDatuak WHERE maila=?",[maila])
     return res.fetchall()
 
 def erabiltzaileEzabatu(Izena):
@@ -153,13 +156,31 @@ def kolore_Pertsonalizatu(Izena,forma,kolorea):
     con.commit()
 
 def puntuazioGordeMailaka(Izena,puntuazioa,maila):
-    puntuTotal = cur.execute("SELECT puntuazioa FROM erabiltzaileak WHERE izena=?", [Izena])
-    ema1 = puntuTotal.fetchone()
-    puntuTotala = ema1[0] + puntuazioa
-    mailaOna = "maila" + str(maila)
-    puntuMaila = cur.execute(f"SELECT {mailaOna} FROM erabiltzaileak WHERE izena=?", [Izena])
-    ema2 = puntuMaila.fetchone()
-    puntuMail = ema2[0] + puntuazioa
-    res = cur.execute(f"UPDATE erabiltzaileak SET {mailaOna}=?,puntuazioa=? WHERE izena=?",
-                      (puntuMail,puntuTotala,Izena))
+    erag = f"INSERT INTO partidaDatuak (erabiltzaileIzena,maila,puntuazioa) VALUES ('{Izena}','{maila}','{puntuazioa}')"
+    cur.execute(erag)
+    puntu = cur.execute("SELECT puntuazioa FROM erabiltzaileak WHERE izena=?", [Izena])
+    puntuazio = puntu.fetchone()
+    puntuak = puntuazio[0] + puntuazioa
+    res = cur.execute(f"UPDATE erabiltzaileak SET puntuazioa=? WHERE izena=?",(puntuak, Izena))
+    con.commit()
+
+def partidaIrabaziak(Izena,maila):
+    res = cur.execute("SELECT count(*) FROM partidaDatuak WHERE erabiltzaileIzena=? AND maila=? AND puntuazioa>=2000", (Izena,maila))
+    return res.fetchone()
+
+def sariaSartu(Izena,saria,maila):
+    sari = "sariaMaila" + str(maila)
+    res = cur.execute(f"UPDATE erabiltzaileak SET {sari}=? WHERE izena=?",
+                      (saria,Izena))
+    con.commit()
+
+def partidaJarraituakGehitu(Izena,puntuak):
+    if(puntuak >=2000):
+        jarraituak = cur.execute("SELECT partidaJarraituak FROM erabiltzaileak WHERE izena=?", [Izena])
+        jarraitu = jarraituak.fetchone()
+        guztira = jarraitu[0] + 1
+        res = cur.execute(f"UPDATE erabiltzaileak SET partidaJarraituak=? WHERE izena=?",(guztira, Izena))
+    else:
+        res = cur.execute(f"UPDATE erabiltzaileak SET partidaJarraituak=? WHERE izena=?", (0, Izena))
+
     con.commit()

@@ -1,18 +1,20 @@
 import random
+import multiprocessing
 import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
 import model.datuBase as db
 import view.aukerenPantaila as ap
 import pickle
+from playsound import playsound
 from pygame import mixer
 
 Izena = " "
-puntuazioa = " "
+Maila = " "
 partidaJarraitu = False
 tablerogordeta = []
 Kolorea = " "
-
+SariakEman = [1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
@@ -35,10 +37,10 @@ class JokatuLeioa(object):
 		button = tk.Button(self.window, text="PARTIDA HASI")
 		button.pack()
 
-		# botoia pasahitza
-		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.aukerenPantailaraJoan)
+		# botoia atzera
+		buttonAtzera=tk.Button (self.window, text=" ATZERA BUELTATU ", command=self.atzeraBueltatu,state="disable")
 		buttonAtzera.pack()
-		# botoia pasahitza
+		# botoia atzera
 
 		puntuazioa = tk.StringVar()
 		puntuazioa.set("Puntuazioa: 0")
@@ -47,7 +49,7 @@ class JokatuLeioa(object):
 		puntuazioalabel.pack()
 
 		self.canvas = TableroaPanela(master=self.window,Tamaina=tamaina, puntuazioalabel=puntuazioa, master2=self)
-		button.configure(command=lambda: self.canvas.jolastu(button, self.window))
+		button.configure(command=lambda: self.canvas.jolastu(button,buttonAtzera, self.window))
 		self.canvas.pack()
 		self.window.bind("<Up>", self.canvas.joku_kontrola)
 		self.window.bind("<Down>", self.canvas.joku_kontrola)
@@ -67,6 +69,14 @@ class JokatuLeioa(object):
 		abiadura = partidaDatuak[1]
 		puntu = partidaDatuak[2]
 		JokatuLeioa(tamaina,abiadura)
+
+	def atzeraBueltatu(self):
+		if(puntuak != 0):
+			db.puntuazioGordeMailaka(Izena, puntuak, Maila)
+		kant = db.partidaIrabaziak(Izena, Maila)
+		self.sariakEmanMailakaAtzera(Maila,kant[0])
+		db.partidaJarraituakGehitu(Izena, puntuak)
+		self.aukerenPantailaraJoan()
 
 	def aukerenPantailaraJoan(self):
 		self.window.destroy()
@@ -88,6 +98,10 @@ class JokatuLeioa(object):
 	def musikaGelditu(self):
 		if self.musikaHasi:
 			mixer.music.stop()
+
+	def sariakEmanMailakaAtzera(self,Maila,kant):
+		if(kant in SariakEman):
+			db.sariaSartu(Izena,kant,Maila)
 
 class TableroaPanela(tk.Frame):
 
@@ -142,6 +156,10 @@ class TableroaPanela(tk.Frame):
 				self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 			except Exception as e:
 				print("GAMEOVER")
+				db.puntuazioGordeMailaka(Izena, self.tab.puntuazioa, Maila)
+				kant = db.partidaIrabaziak(Izena,Maila)
+				self.sariakEmanMailaka(Maila,kant[0])
+				db.partidaJarraituakGehitu(Izena, puntuak)
 				self.tab.hasieratu_tableroa()
 				return
 		self.jokatzen = self.after(abi, self.pausu_bat)
@@ -149,6 +167,8 @@ class TableroaPanela(tk.Frame):
 
 	def puntuazioa_eguneratu(self):
 		if self.puntuazio_panela:
+			global puntuak
+			puntuak = self.tab.puntuazioa
 			self.puntuazio_panela.set(f"Puntuazioa: {(self.tab.puntuazioa)}")
 
 	def joku_kontrola(self, event):
@@ -170,9 +190,7 @@ class TableroaPanela(tk.Frame):
 		self.after_cancel(self.jokatzen)
 		Gordetakopartida = [[ None for x in range(self.tamaina[0])]for y in range(self.tamaina[1])]
 		for i in range(self.tab.tamaina[1]):
-			print("i",i)
 			for t in range(self.tab.tamaina[0]):
-				print("t",t)
 				if (self.tab.tab[i][t] != None):
 					Gordetakopartida[i][t] = self.tab.tab[i][t]
 		serializatua = pickle.dumps(Gordetakopartida)
@@ -181,9 +199,10 @@ class TableroaPanela(tk.Frame):
 		JokatuLeioa.aukerenPantailaraJoan(self.master_)
 
 
-	def jolastu(self, button, window):
+	def jolastu(self, button,buttonAtzera, window):
 
 		button.configure(text=" PARTIDA GORDE ", command=self.partida_gorde)
+		buttonAtzera.configure(state="active")
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		if not partidaJarraitu:
@@ -195,5 +214,14 @@ class TableroaPanela(tk.Frame):
 		self.marraztu_tableroa()
 		self.jokatzen = self.after(400, self.pausu_bat)
 		JokatuLeioa.musikaEntzun(self.master_)
+
+	def sariakEmanMailaka(self,maila,kant):
+		if(kant in SariakEman):
+			if (maila ==  1):
+				db.sariaSartu(Izena,kant,maila)
+			elif (maila ==2):
+				db.sariaSartu(Izena, kant, maila)
+			else:
+				db.sariaSartu(Izena, kant, maila)
 
 
