@@ -40,7 +40,7 @@ class rankingIkusi():
             i = i + 1
 
         rankingaukeratu = tk.StringVar()
-        rankingaukeratu.set("  LAUKI BAT AUKERATU  ")
+        rankingaukeratu.set("  MAILA BAT AUKERATU  ")
 
         rankingaukeratulabel = tk.Label(self.window, textvariable=rankingaukeratu, borderwidth=3, relief="sunken", width=25, height=2 )
         rankingaukeratulabel.pack(pady=2)
