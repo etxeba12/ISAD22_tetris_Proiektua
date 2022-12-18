@@ -69,7 +69,7 @@ class PertsonalizazioAukera():
         buttonBueltatu.pack()
 
     def pantailaKolAld(self, comboKolorea):
-        kolorea = self.hiztegiaEusIng()
+        kolorea = self.hiztegiaEusIng(comboKolorea)
         db.pantailaKolEguneratu(Izena, kolorea)
         if db.kolBera(Izena, comboKolorea.get()):
             messagebox.showinfo(message="Kolore horrekin dago jada pamtaila", title="KoloreBera")
